@@ -1,0 +1,84 @@
+#general {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../assets/backgrounds/login.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#login-form {
+  width: 13%;
+  text-align: center;
+  padding: 2%;
+  border-radius: 10px;
+  background: white;
+}
+
+#hide {
+  color: grey;
+}
+
+.field {
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 5% 5% 5% 7%;
+  border-radius: 10px;
+  box-shadow: 7px 7px 25px 5px rgba(34, 60, 80, 0.15);
+}
+
+.field > input {
+  text-align: start;
+  border: 0 none;
+  height: 40px;
+  width: 100%;
+}
+
+.field > input:focus {
+  outline: none;
+}
+
+#log-in-button {
+  user-select: none;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 25px;
+  margin-bottom: -10px;
+  min-width: 80px;
+  border-color: rgba(0,0,0,0);
+  box-shadow: 7px 7px 25px 2px rgba(34, 60, 80, 0.10);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill::first-line {
+  font-family: "Open Sans", sans-serif;
+}
+
+#username-field {
+  margin-bottom: 5%;
+}
+
+#password-field {
+  position: relative;
+}
+
+#login-form > h2 {
+  font-weight: normal;
+  margin-top: -4%;
+  margin-bottom: 10%;
+  user-select: none;
+}
+
+input::placeholder {
+  user-select: none;
+}

@@ -1,0 +1,17 @@
+<div id="general">
+  <div id="login-form">
+    <h2>Авторизация</h2>
+    <form>
+      <div class="field" id="username-field">
+        <input matInput autocomplete="username" placeholder="Логин" #username>
+      </div>
+      <div class="field" id="password-field">
+        <input matInput [type]="hide ? 'password' : 'text'" autocomplete="current-password" placeholder="Пароль" #password>
+        <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+          <mat-icon id="hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </div>
+    </form>
+    <button id="log-in-button" matRipple (click)="logIn(username.value, password.value)">Войти</button>
+  </div>
+</div>
