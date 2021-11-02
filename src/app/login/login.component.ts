@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent {
   ) { }
 
   public logIn(username: string, password: string): void {
-    this.http.post('https://api.bxkr.org/school/auth', undefined, {
+    this.http.post(environment.apiBaseURL + 'auth', undefined, {
       params: {
         'username': username,
         'password': password
