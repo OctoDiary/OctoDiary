@@ -21,7 +21,7 @@ export class LoginComponent {
   ) { }
 
   public logIn(username: string, password: string): void {
-    this.http.post('https://api.bxkr.ru/school/auth', undefined, {
+    this.http.post('https://api.bxkr.org/school/auth', undefined, {
       params: {
         'username': username,
         'password': password
