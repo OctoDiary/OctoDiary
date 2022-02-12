@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DiaryComponent } from './diary/diary.component';
-import { HeaderComponent } from './diary/header/header.component';
 import { LoginComponent } from './login/login.component';
 import { CookieModule } from 'ngx-cookie';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,13 +15,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatTabsModule } from "@angular/material/tabs";
+import { LessonsComponent } from './diary/lessons/lessons.component';
+import { DashboardComponent } from './diary/dashboard/dashboard.component';
+import { SocialComponent } from './diary/social/social.component';
+import { ProfileComponent } from './diary/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiaryComponent,
-    HeaderComponent,
     LoginComponent,
+    LessonsComponent,
+    DashboardComponent,
+    SocialComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonModule,
     MatRippleModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

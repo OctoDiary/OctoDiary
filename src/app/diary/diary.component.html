@@ -1,2 +1,15 @@
-<p id="ranking_place">
-  Основная информация о пользователе: <pre>{{objStr(userInfo)}}</pre>
+<div *ngIf="!loaded" [@fadeOut]="true" id="loading">
+  <p>OctoDiary</p>
+  <mat-progress-bar id="loading-bar" mode="indeterminate"></mat-progress-bar>
+</div>
+<div *ngIf="loaded" id="header">
+  <div id="user-info" routerLink="/profile">
+    <img [src]="userInfo.avatarUrl" alt="Ава" id="user-ava">
+    <span id="greetings">Привет, {{userInfo.firstName}}!</span>
+  </div>
+  <nav mat-tab-nav-bar>
+    <a *ngFor="let link of tabs | keyvalue" [active]="link.value === getRoute()" [routerLink]="link.value"
+       mat-tab-link>{{utfStrings[link.key]}}</a>
+  </nav>
+</div>
+<router-outlet></router-outlet>
