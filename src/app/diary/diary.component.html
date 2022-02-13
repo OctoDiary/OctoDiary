@@ -5,11 +5,12 @@
 <div *ngIf="loaded" id="header">
   <div id="user-info" routerLink="/profile">
     <img [src]="userInfo.avatarUrl" alt="Ава" id="user-ava">
-    <span id="greetings">Привет, {{userInfo.firstName}}!</span>
+    <span [@fadeOut]="true" id="greetings">{{userInfo.firstName}} {{userInfo.lastName}}</span>
   </div>
   <nav mat-tab-nav-bar>
     <a *ngFor="let link of tabs | keyvalue" [active]="link.value === getRoute()" [routerLink]="link.value"
-       mat-tab-link>{{utfStrings[link.key]}}</a>
+       mat-tab-link>
+      <mat-icon>{{link.key}}</mat-icon>&nbsp;{{utfStrings[link.key]}}</a>
   </nav>
 </div>
 <router-outlet></router-outlet>

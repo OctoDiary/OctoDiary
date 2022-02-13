@@ -29,16 +29,16 @@ export class DiaryComponent {
   public objStr = (obj: object | undefined) => JSON.stringify(obj, undefined, 2);
 
   public utfStrings: { [name: string]: string } = {
-    dashboard: 'Главная',
-    lessons: 'Уроки',
-    communication: 'Общение',
-  }
+    home: 'Главная',
+    school: 'Уроки',
+    edit: 'Общение',
+  };
 
   public tabs = {
-    dashboard: '/',
-    lessons: '/lessons',
-    communication: '/social'
-  }
+    home: '/',
+    school: '/lessons',
+    edit: '/social'
+  };
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {
     this.userInfo = <UserInfo>{}
@@ -48,6 +48,10 @@ export class DiaryComponent {
     });
   }
 
+  public getRoute(): string {
+    return this.router.url;
+  }
+
   private get(url: string, params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>; }): Observable<Object> {
     return this.http.get(environment.apiBaseURL + url, {
       headers: {
@@ -55,11 +59,7 @@ export class DiaryComponent {
         'User-ID': this.cookie.get('uid')
       },
       params: params
-    })
-  }
-
-  public getRoute = () => {
-    return this.router.url
+    });
   }
 
 }
