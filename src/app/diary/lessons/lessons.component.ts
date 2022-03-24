@@ -12,7 +12,6 @@ export class LessonsComponent {
   today: Date = new Date();
 
   constructor(public data: DataService) {
-    console.log(this.getMonday(new Date()));
   }
 
   getMonday(date: Date) {
