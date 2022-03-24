@@ -1,11 +1,11 @@
-<div *ngIf="!loaded" [@fadeOut]="true" id="loading">
+<div *ngIf="!data.userInfo" [@fadeOut]="true" id="loading">
   <p>OctoDiary</p>
   <mat-progress-bar id="loading-bar" mode="indeterminate"></mat-progress-bar>
 </div>
-<div *ngIf="loaded" id="header">
+<div *ngIf="data.userInfo" id="header">
   <div id="user-info" routerLink="/profile">
-    <img [src]="userInfo.avatarUrl" alt="Ава" id="user-ava">
-    <span [@fadeOut]="true" id="greetings">{{userInfo.firstName}} {{userInfo.lastName}}</span>
+    <img [src]="data.userInfo.avatarUrl" alt="Ава" id="user-ava">
+    <span [@fadeOut]="true" id="greetings">{{data.userInfo.firstName}} {{data.userInfo.lastName}}</span>
   </div>
   <nav mat-tab-nav-bar>
     <a *ngFor="let link of tabs | keyvalue" [active]="link.value === getRoute()" [routerLink]="link.value"

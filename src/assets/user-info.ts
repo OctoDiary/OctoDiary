@@ -9,15 +9,12 @@ export interface UserInfo {
   className: string;
   classNumber: string;
   firstName: string;
-  groupId: number;
   lastName: string;
   middleName: string;
-  personId: number;
   rankingHistory: RankingRecord[];
   rankingPlace: number;
   schoolAvatarUrl: string;
   schoolGeoPosition: any[];
-  schoolId: number;
   schoolName: string;
   sex: string;
   userId: number;

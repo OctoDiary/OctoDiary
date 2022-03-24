@@ -21,6 +21,7 @@ import { LessonsComponent } from './diary/lessons/lessons.component';
 import { DashboardComponent } from './diary/dashboard/dashboard.component';
 import { SocialComponent } from './diary/social/social.component';
 import { ProfileComponent } from './diary/profile/profile.component';
+import { MatDividerModule } from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ProfileComponent } from './diary/profile/profile.component';
     MatSnackBarModule,
     MatProgressBarModule,
     MatTabsModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

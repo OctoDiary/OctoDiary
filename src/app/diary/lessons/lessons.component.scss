@@ -1,0 +1,55 @@
+.week {
+  margin: 25px;
+}
+
+.day, .lesson {
+  border: solid #cccccc 1px;
+  border-radius: 10px;
+  padding: 15px 15px 0;
+  margin-bottom: 15px;
+}
+
+.gray {
+  color: gray;
+}
+
+.teacherLastName {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s, visibility .5s;
+}
+
+.teacher:hover > .teacherLastName {
+  visibility: visible;
+  opacity: 1;
+}
+
+.marks, .marks > div {
+  display: flex;
+}
+
+.mark {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  margin-right: 5px;
+}
+
+.mark5 {
+  background: linear-gradient(to bottom right, green, greenyellow);
+}
+
+.mark4 {
+  background: linear-gradient(to bottom right, darkolivegreen, yellowgreen);
+}
+
+.mark3 {
+  background: linear-gradient(to bottom right, orange, yellow);
+}
+
+.mark2 {
+  background: linear-gradient(to bottom right, red, pink);
+}
