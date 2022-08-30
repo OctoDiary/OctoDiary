@@ -4,13 +4,21 @@
 </div>
 <div *ngIf="data.userInfo" id="header">
   <div id="user-info" routerLink="/profile">
-    <img [src]="data.userInfo.avatarUrl" alt="Ава" id="user-ava">
-    <span [@fadeOut]="true" id="greetings">{{data.userInfo.firstName}} {{data.userInfo.lastName}}</span>
+    <img [src]="data.userInfo.avatarUrl" alt="Ава" id="user-ava" />
+    <span [@fadeOut]="true" id="greetings"
+      >{{ data.userInfo.firstName }} {{ data.userInfo.lastName }}</span
+    >
   </div>
   <nav mat-tab-nav-bar>
-    <a *ngFor="let link of tabs | keyvalue" [active]="link.value === getRoute()" [routerLink]="link.value"
-       mat-tab-link>
-      <mat-icon>{{link.key}}</mat-icon>&nbsp;{{utfStrings[link.key]}}</a>
+    <a
+      *ngFor="let link of tabs | keyvalue"
+      [active]="link.value === getRoute()"
+      [routerLink]="link.value"
+      mat-tab-link
+    >
+      <mat-icon>{{ link.key }}</mat-icon
+      >&nbsp;{{ utfStrings[link.key] }}</a
+    >
   </nav>
 </div>
 <router-outlet></router-outlet>

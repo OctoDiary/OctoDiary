@@ -1,19 +1,42 @@
 <div *ngFor="let week of data.weeks" class="week">
-  <h2>Неделя с {{getTimeRepresentation(week.firstWeekDayDate, 'common_date')}}
-    по {{getTimeRepresentation(week.lastWeekDayDate, 'common_date')}}</h2>
+  <h2>
+    Неделя с
+    {{ getTimeRepresentation(week.firstWeekDayDate, "common_date") }} по
+    {{ getTimeRepresentation(week.lastWeekDayDate, "common_date") }}
+  </h2>
   <div *ngFor="let day of week.days" class="day">
-    <h3>{{getTimeRepresentation(day.date, 'full_date')}}</h3>
+    <h3>{{ getTimeRepresentation(day.date, "full_date") }}</h3>
     <p *ngIf="day.lessons.length === 0">Свободный день!</p>
     <div *ngFor="let lesson of day.lessons" class="lesson">
-      <p>{{lesson.subject.name}}&nbsp;<span class="gray">{{lesson.theme}}</span></p>
-      <p>{{lesson.number}} урок / {{getTimeRepresentation(lesson.startDateTime, 'only_time')}}
-        -{{getTimeRepresentation(lesson.endDateTime, 'only_time')}}
-        <span class="gray teacher">{{lesson.teacher.firstName}} {{lesson.teacher.middleName}} <span
-          class="teacherLastName">{{lesson.teacher.lastName}}</span></span></p>
-      <p *ngIf="lesson.homework">- {{getHomeworkRepresentation(lesson.homework!.text)}}</p>
+      <p>
+        {{ lesson.subject.name }}&nbsp;<span class="gray">{{
+          lesson.theme
+        }}</span>
+      </p>
+      <p>
+        {{ lesson.number }} урок /
+        {{ getTimeRepresentation(lesson.startDateTime, "only_time") }} -{{
+          getTimeRepresentation(lesson.endDateTime, "only_time")
+        }}
+        <span class="gray teacher"
+          >{{ lesson.teacher.firstName }} {{ lesson.teacher.middleName }}
+          <span class="teacherLastName">{{
+            lesson.teacher.lastName
+          }}</span></span
+        >
+      </p>
+      <p *ngIf="lesson.homework">
+        - {{ getHomeworkRepresentation(lesson.homework!.text) }}
+      </p>
       <div class="marks">
         <div *ngFor="let work of lesson.workMarks">
-          <div *ngFor="let mark of work.marks" [class]="'mark'+mark.value" class="mark">{{mark.value}}</div>
+          <div
+            *ngFor="let mark of work.marks"
+            [class]="'mark' + mark.value"
+            class="mark"
+          >
+            {{ mark.value }}
+          </div>
         </div>
       </div>
     </div>

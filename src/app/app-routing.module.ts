@@ -4,10 +4,10 @@ import { DiaryComponent } from './diary/diary.component';
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login.guard';
 import { DiaryGuard } from './diary.guard';
-import { LessonsComponent } from "./diary/lessons/lessons.component";
-import { DashboardComponent } from "./diary/dashboard/dashboard.component";
-import { SocialComponent } from "./diary/social/social.component";
-import { ProfileComponent } from "./diary/profile/profile.component";
+import { LessonsComponent } from './diary/lessons/lessons.component';
+import { DashboardComponent } from './diary/dashboard/dashboard.component';
+import { SocialComponent } from './diary/social/social.component';
+import { ProfileComponent } from './diary/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -17,31 +17,31 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DashboardComponent
+        component: DashboardComponent,
       },
       {
         path: 'lessons',
-        component: LessonsComponent
+        component: LessonsComponent,
       },
       {
         path: 'social',
-        component: SocialComponent
+        component: SocialComponent,
       },
       {
         path: 'profile',
-        component: ProfileComponent
-      }
-    ]
+        component: ProfileComponent,
+      },
+    ],
   },
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [LoginGuard]
-  }
+    canActivate: [LoginGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

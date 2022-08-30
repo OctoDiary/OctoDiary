@@ -1,5 +1,5 @@
 export interface Mark {
-  id: bigint,
-  value: string,
-  mood: string,
+  id: bigint;
+  value: string;
+  mood: string;
 }

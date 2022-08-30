@@ -1,12 +1,12 @@
-import { Lesson } from "./lesson";
+import { Lesson } from './lesson';
 
 export interface Day {
-  date: string,
+  date: string;
   dayHomeworksProgress: {
-    completedLessonsWithHomeworksCount: number,
-    totalLessonsWithHomeworksCount: number,
-  },
-  hasImportantWork: boolean,
-  lessons: Lesson[],
-  messengerEntryPoint: any
+    completedLessonsWithHomeworksCount: number;
+    totalLessonsWithHomeworksCount: number;
+  };
+  hasImportantWork: boolean;
+  lessons: Lesson[];
+  messengerEntryPoint: any;
 }

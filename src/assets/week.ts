@@ -1,9 +1,9 @@
-import { Day } from "./day";
+import { Day } from './day';
 
 export interface Week {
-  days: Day[],
-  firstWeekDayDate: string,
-  homeworksCount: string,
-  id: string,
-  lastWeekDayDate: string,
+  days: Day[];
+  firstWeekDayDate: string;
+  homeworksCount: string;
+  id: string;
+  lastWeekDayDate: string;
 }

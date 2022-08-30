@@ -15,13 +15,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatTabsModule } from "@angular/material/tabs";
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { LessonsComponent } from './diary/lessons/lessons.component';
 import { DashboardComponent } from './diary/dashboard/dashboard.component';
 import { SocialComponent } from './diary/social/social.component';
 import { ProfileComponent } from './diary/profile/profile.component';
-import { MatDividerModule } from "@angular/material/divider";
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -51,6 +51,6 @@ import { MatDividerModule } from "@angular/material/divider";
     MatDividerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
