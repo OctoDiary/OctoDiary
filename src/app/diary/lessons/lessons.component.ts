@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { DataService } from '../../data.service';
 import { months } from '../../../assets/months';
 
@@ -7,16 +7,23 @@ import { months } from '../../../assets/months';
   templateUrl: './lessons.component.html',
   styleUrls: ['./lessons.component.scss'],
 })
-export class LessonsComponent {
-  today: Date = new Date();
+export class LessonsComponent implements AfterViewInit {
+  todayDate: Date = new Date();
+  //today: string = `${("0" + (this.todayDate.getMonth() + 1)).slice(-2)}-${("0" + (this.todayDate.getDate())).slice(-2)}`;
+  today: string = `05-20`;
 
-  constructor(public data: DataService) {}
+  @ViewChildren('day', {read: ElementRef}) renderedDays!: QueryList<ElementRef>;
 
-  getMonday(date: Date) {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = d.getDate() - day + (day == 0 ? -6 : 1);
-    return new Date(d.setDate(diff));
+  constructor(public data: DataService) {
+  }
+
+  ngAfterViewInit() {
+    this.renderedDays.changes.subscribe((newList: QueryList<ElementRef>) => {
+      newList.forEach((elRef) => {
+        console.log(1);
+        if (elRef.nativeElement.id == this.today) elRef.nativeElement.scrollIntoView({behavior: 'smooth', block: 'center'})
+      })
+    })
   }
 
   getTimeRepresentation(
