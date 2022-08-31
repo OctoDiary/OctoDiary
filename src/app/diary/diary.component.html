@@ -4,9 +4,9 @@
 </div>
 <div *ngIf="data.userInfo" id="header">
   <div id="user-info" routerLink="/profile">
-    <img [src]="data.userInfo.avatarUrl" alt="Ава" id="user-ava" />
+    <img [src]="data.userInfo.avatarUrl" alt="Ава" id="user-ava"/>
     <span [@fadeOut]="true" id="greetings"
-      >{{ data.userInfo.firstName }} {{ data.userInfo.lastName }}</span
+    >{{ data.userInfo.firstName }} {{ data.userInfo.lastName }}</span
     >
   </div>
   <nav mat-tab-nav-bar>

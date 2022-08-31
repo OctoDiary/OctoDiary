@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../environments/environment';
 import { UserInfo } from '../assets/user-info';
 import { CookieService } from 'ngx-cookie';
 import { Week } from '../assets/week';
+import { map, tap,  } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class DataService {
   }
 
   public addWeeks(): void {
-    this.get<{ weeks: Week[] }>('diary').subscribe((v) => {
+    this.get<{ weeks: Week[] }>('sample_diary').subscribe((v) => {
       this.weeks = <Week[]>v.weeks;
     });
   }
