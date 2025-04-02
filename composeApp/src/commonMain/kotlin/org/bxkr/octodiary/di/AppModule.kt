@@ -11,6 +11,7 @@ import org.bxkr.octodiary.data.storageVersion
 import org.bxkr.octodiary.getPaths
 import org.bxkr.octodiary.network.MosAuthClient
 import org.bxkr.octodiary.network.MosAuthClientImpl
+import org.bxkr.octodiary.ui.routeFlow
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -23,6 +24,7 @@ val appModule = module {
             default = StorageLatest()
         )
     }
+    single { routeFlow() }
     singleOf(::RepositoryImpl) { bind<Repository>() }
     singleOf(::AuthManagerImpl) { bind<AuthManager>() }
     singleOf(::MosAuthClientImpl) { bind<MosAuthClient>() }

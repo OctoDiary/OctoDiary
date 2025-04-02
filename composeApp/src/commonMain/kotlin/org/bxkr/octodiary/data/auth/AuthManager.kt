@@ -8,6 +8,7 @@ import org.koin.core.component.inject
 
 interface AuthManager {
     suspend fun getAccessToken(): MesToken
+    suspend fun updateAccessToken(newToken: String)
 }
 
 class AuthManagerImpl : AuthManager, KoinComponent {
@@ -17,4 +18,7 @@ class AuthManagerImpl : AuthManager, KoinComponent {
         kStore.get()?.accessToken?.let { MesToken(it) } ?: throw IllegalStateException(
             "No authorization found. Please do not instantiate AuthManager"
         )
+
+    override suspend fun updateAccessToken(newToken: String) =
+        kStore.update { it?.copy(accessToken = newToken) }
 }

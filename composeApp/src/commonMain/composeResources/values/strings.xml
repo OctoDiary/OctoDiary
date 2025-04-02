@@ -1,0 +1,398 @@
+<resources>
+    <string name="app_name" translatable="false">OctoDiary</string>
+    <string name="hello_world">Hello, World!</string>
+    <string name="log_in">Log In</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="auth">Authentication</string>
+    <string name="token">Token</string>
+    <string name="user_id" translatable="false">user_id</string>
+    <string name="auth_file_key" translatable="false">auth</string>
+    <string name="user_id_is" translatable="false">User ID: %s</string>
+    <string name="retrofit_error" translatable="false">Retrofit error: %s</string>
+    <string name="wrong">Wrong username or/and password!</string>
+    <string name="auth_out_of_date">Authentication data is out of date</string>
+    <string name="week_n">Week from %s to %s</string>
+    <string name="auth_out_of_date_extra" translatable="false">auth_out_of_date</string>
+    <string name="time_from_to" translatable="false">%s - %s</string>
+    <string name="free_day">Free day!</string>
+    <string name="placeholder_week" translatable="false">Week from 01 January to 07 January</string>
+    <string name="placeholder_day" translatable="false">01 January, monday</string>
+    <string name="placeholder_lesson_name" translatable="false">Maths</string>
+    <string name="placeholder_lesson_time" translatable="false">08:30 - 09:10</string>
+    <string name="diary">Diary</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="placeholder_profile_name" translatable="false">Jacque Fresco</string>
+    <string name="profile_name" translatable="false">%s %s</string>
+    <string name="placeholder_school" translatable="false">Manhattan School of Computer Technology</string>
+    <string name="placeholder_rating" translatable="false">At the <u>1st</u> place in class!</string>
+    <string name="content_show_rating">Show general rating</string>
+    <string name="rating_place">At the <u>%s</u> place in class!</string>
+    <string name="rating_place_by_subject">At the <u>%s</u> place by subject!</string>
+    <string name="content_rating_card_background">Funny image that matches your current rating</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="show_rating">Rating in dashboard</string>
+    <string name="rating">Rating</string>
+    <string name="rating_background_info">Image, provided by external resource</string>
+    <string name="show_rating_background">Rating background</string>
+    <string name="data_under_name">Info under student\’s name</string>
+    <string name="school">School</string>
+    <string name="class_name">Class name</string>
+    <string name="middle_name">Middle name</string>
+    <string name="lessons_tomorrow_key">Lessons tomorrow count</string>
+    <string name="lessons_tomorrow_template">{0,choice,0#No lessons tomorrow|1#One lesson tomorrow|1&lt;{0} lessons tomorrow}</string>
+    <string name="add_week_before">Add week before</string>
+    <string name="add_week_after">Add week after</string>
+    <string name="week_slider">Week slider</string>
+    <string name="day_slider">Day slider</string>
+    <string name="weeks">Weeks</string>
+    <string name="days">Days</string>
+    <string name="week_dates" translatable="false">%s-%s</string>
+    <string name="saved_data_key" translatable="false">saved_data</string>
+    <string name="user_data_key" translatable="false">user_data</string>
+    <string name="diary_data_key" translatable="false">diary_data</string>
+    <string name="data_age_key" translatable="false">data_age</string>
+    <string name="placeholder_lesson_desc" translatable="false">Paragraph 1, exercise 23</string>
+    <string name="lesson_description">Lesson description in diary</string>
+    <string name="homework">Homework</string>
+    <string name="lesson_topic">Lesson topic</string>
+    <string name="date_weekday" translatable="false">%s, %s</string>
+    <string name="placeholder_lesson_topic" translatable="false">Functions \'x=a^2\'</string>
+    <string name="placeholder_teacher" translatable="false">Gordon Freeman</string>
+    <string name="placeholder_lesson_number" translatable="false">1st lesson</string>
+    <string name="teacher">Teacher</string>
+    <string name="topic">Topic</string>
+    <string name="lesson">Lesson</string>
+    <string name="teacher_name_template" translatable="false">%s %s %s</string>
+    <string name="lesson_n">%s lesson</string>
+    <string name="placeholder_homework_attachment" translatable="false">Physics, 11th class. Basics</string>
+    <string name="demousername" translatable="false">demousername</string>
+    <string name="demopassword" translatable="false">demopassword</string>
+    <string name="demo_user_id" translatable="false">-1</string>
+    <string name="demo_token" translatable="false">DEMO_TOKEN</string>
+    <string name="rating_data_key" translatable="false">rating_data</string>
+    <string name="log_out">Log out</string>
+    <string name="demo_mode">Demo mode</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="placeholder_rating_place" translatable="false">1</string>
+    <string name="placeholder_main_rating_average" translatable="false">4.67</string>
+    <string name="school_out_of_date">Updating school data…</string>
+    <string name="school_out_of_date_extra" translatable="false">school_out_of_date</string>
+    <string name="placeholder_mark_value" translatable="false">5</string>
+    <string name="mark">Mark</string>
+    <string name="school_mosreg_name">School Mosreg</string>
+    <string name="dnevnik_ru">Dnevnik.ru</string>
+    <string name="select_server">Diary</string>
+    <string name="server_key" translatable="false">server</string>
+    <string name="have_not_active_memberships_error_reason" translatable="false">HaveNotActiveMemberships</string>
+    <string name="have_not_active_memberships_message">Student doesn\’t have an active membership in any school</string>
+    <string name="error_type" translatable="false">Error</string>
+    <string name="update_available">Update %s available!</string>
+    <string name="update_available_message">Found an update: %s. Want to download and install it?</string>
+    <string name="changes">Changes</string>
+    <string name="later">Later</string>
+    <string name="yes">Yes</string>
+    <string name="placeholder_work_type" translatable="false">Test Paper</string>
+    <string name="goto_lesson">Go to lesson page</string>
+    <string name="works">Important works</string>
+    <string name="marks">Marks</string>
+    <string name="placeholder_mark_rating_persons" translatable="false">10 students</string>
+    <string name="select_server_hint">Select diary</string>
+    <string name="update">Update %s</string>
+    <string name="download_started">Download started…</string>
+    <string name="update_file_name" translatable="false">%s-%s.apk</string>
+    <string name="show_rating_images_info">Pictures used instead of student avatars</string>
+    <string name="show_rating_images_name">Avatars in rating</string>
+    <string name="screen_when_opening">Screen when opening</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="user_feed_data_key" translatable="false">user_feed_data</string>
+    <string name="placeholder_mark_type_and_date" translatable="false">WRK, Oct 20</string>
+    <string name="mark_type_and_date" translatable="false">%s, %s</string>
+    <string name="fractional_mark" translatable="false">%s/%s</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="feed_type_important_work">Important work</string>
+    <string name="feed_type_post">Post</string>
+    <string name="feed_type_week_summary">Week summary</string>
+    <string name="feed_type_comment">Lesson comment</string>
+    <string name="image">Image</string>
+    <string name="data_update_channel_name">School data update channel</string>
+    <string name="notification_new_mark_text">New mark: %s, %s, %s</string>
+    <string name="notification_new_mark_text_no_value">New mark: %s, %s</string>
+    <string name="notification_new_mark_title">New mark!</string>
+    <string name="period_marks">Period Marks</string>
+    <string name="period_marks_data_key" translatable="false">period_marks</string>
+    <string name="average_mark">Average</string>
+    <string name="average_important">By work-marks</string>
+    <string name="not_yet">Not yet</string>
+    <string name="period_average_extended">Average mark: %s – %s for the %s</string>
+    <string name="placeholder_period_average" translatable="false">Average mark: 4.5 – 5 for the semester</string>
+    <string name="placeholder_period_weighted" translatable="false">Weighted average: 4.5 – 5 for the semester</string>
+    <string name="half_year">half-year</string>
+    <string name="quarter">quarter</string>
+    <string name="semester">semester</string>
+    <string name="trimester">trimester</string>
+    <string name="module">module</string>
+    <string name="period_average">Average mark: %s</string>
+    <string name="not_set_yet">not set yet</string>
+    <string name="period_marks_chip">Will be %s</string>
+    <string name="fractional_mark_rating_value" translatable="false">%s%s</string>
+    <string name="theme_dynamic">Dynamic Color</string>
+    <string name="theme_red">Red theme</string>
+    <string name="theme_green">Green theme</string>
+    <string name="theme_blue">Blue theme</string>
+    <string name="theme_yellow">Yellow theme</string>
+    <string name="theme_purple">Purple theme</string>
+    <string name="theme_cyan">Cyan theme</string>
+    <string name="theme">App color theme</string>
+    <string name="theme_description">Color accent in whole app</string>
+    <string name="class_wall_post">Class wall post</string>
+    <string name="homework_fab_desc">Do the homework</string>
+    <string name="placeholder_time" translatable="false">20\n42</string>
+    <string name="homework_for_date">by %s</string>
+    <string name="play">play</string>
+    <string name="pause">pause</string>
+    <string name="previous">previous</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="homework_mode">Homework mode</string>
+    <string name="homework_mode_summary">Screen with useful information when doing the homework</string>
+    <string name="music_controls">Music controls</string>
+    <string name="keep_screen_on">Keep screen on</string>
+    <string name="keep_screen_on_summary">Don\’t turn the screen off when in the homework mode</string>
+    <string name="music_controls_summary">May not appear when using remote play</string>
+    <string name="search_by_subject">Search by subject</string>
+    <string name="always_show_keyboard">Always raise keyboard</string>
+    <string name="always_show_keyboard_summary">May cause lagging on some devices</string>
+    <string name="vpn_can_slow_loadings">VPN can slow loadings</string>
+    <string name="check_connection">Server is down or no internet connection</string>
+    <string name="kundelik">Kundelik</string>
+    <string name="weighted_template">Weighted average: %s</string>
+    <string name="weighted_template_extended">Weighted average: %s - %s for the %s</string>
+    <string name="unknowns">Unknowns</string>
+    <string name="change_the_avatar">Change the avatar</string>
+    <string name="weighted_average">Weighted</string>
+    <string name="error_dialog_title">The server responded with an error!</string>
+    <string name="error_dialog_description">Looks like an internal error has occurred on the server side. You can try logging into your account or try again later.</string>
+    <string name="try_again">Try again</string>
+    <string name="delete_avatar">Remove an avatar</string>
+    <string name="avatar_deletion_is_currently_unsupported">Avatar deletion is currently unsupported</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="subject">Subject</string>
+    <string name="period_name" translatable="false">%1$s %2$s</string>
+    <string name="log_in_on_mosru">Log in on mos.ru</string>
+    <string name="or">or</string>
+    <string name="exchanging_code_to_token">Exchanging code to token…</string>
+    <string name="mes">MES</string>
+    <string name="myschool">My School</string>
+    <string name="log_in_on_gosuslugi">Log in on Gosuslugi</string>
+    <string name="skip">Skip</string>
+    <string name="enter_new_pin">Enter new passcode</string>
+    <string name="repeat_pin">Repeat your passcode</string>
+    <string name="pins_are_diff">Passcodes don\'t match</string>
+    <string name="no_description">No description</string>
+    <string name="lesson_location">Location</string>
+    <string name="at_time">at</string>
+    <string name="mark_created">Created on %s</string>
+    <string name="all_day">All day</string>
+    <string name="conference">Conference</string>
+    <string name="unsupported_url">Unsupported link</string>
+    <string name="url_copied_to_clipboard">URL was copied to clipboard</string>
+    <string name="homeworks">Homework</string>
+    <string name="to">to</string>
+    <string name="schedule_today">Schedule today</string>
+    <string name="schedule_for">Schedule for %s</string>
+    <string name="last_week_marks_are_shown">last month marks are shown</string>
+    <string name="birth_date_t">Birth date: %1$s</string>
+    <string name="snils_t">"SNILS: "</string>
+    <string name="show">show</string>
+    <string name="visits_t">Attendance %1$s</string>
+    <string name="hello_t">Hello, %1$s!</string>
+    <string name="class_t">Class %1$s</string>
+    <string name="balance_t">%1$s rubles</string>
+    <string name="personal_data">Personal data</string>
+    <string name="class_label">Class</string>
+    <string name="meal">Meal</string>
+    <string name="documents">Documents</string>
+    <string name="representatives">Representatives</string>
+    <string name="expand">Expand</string>
+    <string name="phone_t" translatable="false">+7 %1$s</string>
+    <string name="phone_minimized_t" translatable="false">+7%1$s</string>
+    <string name="next_week_homeworks_are_shown">next week homeworks are shown</string>
+    <string name="name_column">name</string>
+    <string name="rating_column">rank</string>
+    <string name="teachers">Teachers</string>
+    <string name="choose_context_profile">Choose student profile</string>
+    <string name="learn_t">%1$s to learn</string>
+    <string name="do_t">%1$s to exercise</string>
+    <string name="ok">OK</string>
+    <string name="warning">Warning</string>
+    <string name="auth_receivers_warn">Looks like you have official MES or My School application installed. After auth choose %1$s among apps for everything to work.</string>
+    <string name="use_pin">Passcode lock</string>
+    <string name="cancel">Cancel</string>
+    <string name="by_date">By date</string>
+    <string name="by_subject">By subject</string>
+    <string name="final_mark">Final mark</string>
+    <string name="mark_filter_by_updated">By date created</string>
+    <string name="mark_filter_by_lesson_date">By lesson date</string>
+    <string name="mark_filter_alphabetical">Alphabetical (A-Z)</string>
+    <string name="mark_filter_by_last_update">By last marks update</string>
+    <string name="mark_filter_by_average">By average mark</string>
+    <string name="mark_filter_by_ranking">By ranking place</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="wallpaper_dynamic_color">Wallpaper dynamic color</string>
+    <string name="log_into_bot">Log into OctoDiaryBot</string>
+    <string name="soon">Coming soon…</string>
+    <string name="already_auth">You\'re already logged in</string>
+    <string name="mes_material">MES Library</string>
+    <string name="copy_link">Copy link</string>
+    <string name="event">Event</string>
+    <string name="no_event">No events found</string>
+    <string name="s_till_the_end">%s till the end</string>
+    <string name="next_event">Next lesson is at %s</string>
+    <string name="at_lesson_now">At the lesson</string>
+    <string name="break_label">Break</string>
+    <string name="rest">Rest</string>
+    <string name="holidays">Holidays</string>
+    <string name="report_issue">Report an issue</string>
+    <string name="s_till_the_start">%s till the start</string>
+    <string name="when_to_go">School on %s at %s</string>
+    <string name="widget_lesson_desc_template" translatable="false">%s: %s - %s</string>
+    <string name="widget_name">Studying status</string>
+    <string name="widget_description">The most important info about lessons on your homescreen</string>
+    <string name="error_occurred">An error has occurred!</string>
+    <string name="fingerprint">Biometric authentication</string>
+    <string name="no_account_found_please_log_in">No account found\nPlease log in</string>
+    <string name="today_lowercase">today</string>
+    <string name="show_mark_value_in_notification">Show mark value in notification</string>
+    <string name="replacement">Replacement</string>
+    <string name="common">General</string>
+    <string name="notifications">Notifications</string>
+    <string name="appearance">Appearance</string>
+    <string name="security">Security</string>
+    <string name="about">About the app</string>
+    <string name="common_desc">Main sections behaviour</string>
+    <string name="notifications_desc">Choose displaying info</string>
+    <string name="appearance_desc">Color themes of the app</string>
+    <string name="security_desc">Passcode and other</string>
+    <string name="about_desc">Developers, links</string>
+    <string name="show_lesson_numbers">Show lesson numbers</string>
+    <string name="show_only_plan">Hide additional events</string>
+    <string name="show_only_plan_desc">Show only plan lessons</string>
+    <string name="main_rating">Class rating</string>
+    <string name="subject_rating">Subject ratings</string>
+    <string name="ratings">Ratings</string>
+    <string name="select">Select</string>
+    <string name="based_on_current_marks">Based on current period marks</string>
+    <string name="students_count">Students count</string>
+    <string name="class_results">Class results</string>
+    <string name="and_other_contributors">and other contributors…</string>
+    <string name="other_octodiary_projects">Other OctoDiary projects</string>
+    <string name="bot">Telegram bot</string>
+    <string name="open">Open</string>
+    <string name="bot_description">Notifications and useful data in your chats</string>
+    <string name="python_lib">Python library</string>
+    <string name="python_lib_description">Use MES API in your Python projects straightly</string>
+    <string name="developers">Developers</string>
+    <string name="migration">Migration</string>
+    <string name="migration_description">Unfortunately, re-authorization is required after the update. We apologize!</string>
+    <string name="show_student_id">Show student ID</string>
+    <string name="finals">Finals</string>
+    <string name="year">Year</string>
+    <string name="hide_default_weight">Hide weight 1 in all marks</string>
+    <string name="show_breaks">Show breaks</string>
+    <string name="mark_highlighting">Mark highlighting</string>
+    <string name="mark_highlighting_desc">Add color to bad marks</string>
+    <string name="menu">menu</string>
+    <string name="log_in_by_token">Log in by token</string>
+    <string name="token_auth_warning">Authorization will be active until the token expires</string>
+    <string name="invalid_token">Invalid JWT token!</string>
+    <string name="token_description">Subsystem: %s\nValid through: %s</string>
+    <string name="paste">Paste</string>
+    <string name="changelog">What\'s new</string>
+    <string name="click_to_show_more">Click to show more</string>
+    <string name="changes_label">changes</string>
+    <string name="c26_newdaybook_title">New look of schedule</string>
+    <string name="c26_newdaybook_subtitle">Breaks, indicators, numbers and calendar</string>
+    <string name="c26_finals_title">Final marks</string>
+    <string name="c26_finals_subtitle">Marks for each module and for year</string>
+    <string name="c26_widget_title">Widget</string>
+    <string name="c26_widget_subtitle">Shows current status of learning</string>
+    <string name="c26_version_shortname" translatable="false">v2.1.0</string>
+    <string name="c26_description">• New schedule design\n• Final marks\n• Learning status widget</string>
+    <string name="c26_version_name">Version 2.1.0</string>
+    <string name="back_exit">back/exit</string>
+    <string name="close">Close</string>
+    <string name="background">Background</string>
+    <string name="add_student">Add student</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="new_student">New student</string>
+    <string name="add">Add</string>
+    <string name="what_is_it">What is it?</string>
+    <string name="add_students_help_description">If your class became empty, you can add your classmates through this form, and they will appear in ratings across the app. This data will be saved in your %s account, so you won\'t be required to fill this information again when re-logging.</string>
+    <string name="student_id">Student ID</string>
+    <string name="delete">Delete</string>
+    <string name="mark_calculator">Mark calculator</string>
+    <string name="add_mark">New marks</string>
+    <string name="help">Help</string>
+    <string name="add_mark_help_keyboard">Enter new marks separated by spaces, use the ^ symbol to indicate the weight, for example \"5^2 4 3\"</string>
+    <string name="remove_non_numeric_marks">Remove non-numeric marks</string>
+    <string name="buttons">Buttons</string>
+    <string name="keyboard">Keyboard</string>
+    <string name="add_mark_help_buttons">Click on the corresponding marks with pluses and a new average grade will be calculated taking them into account</string>
+    <string name="add_to_home_screen">Add to home screen</string>
+    <string name="c26_calc_title">Mark calculator</string>
+    <string name="c26_calc_subtitle">Count your future average and final grades</string>
+    <string name="c26_highlighting_title">Mark highlighting</string>
+    <string name="c26_highlighting_subtitle">Bad marks became more noticeable (you can disable this in settings)</string>
+    <string name="no_periods_yet">no periods yet</string>
+    <string name="school_and_teachers">School and teachers</string>
+    <string name="exam_results">Exam results</string>
+    <string name="ege" translatable="false">ЕГЭ</string>
+    <string name="oge" translatable="false">ОГЭ</string>
+    <string name="other">Other</string>
+    <string name="gia_title">State final certification</string>
+    <string name="approbation">Approbation</string>
+    <string name="approbation_suffix">(approbation)</string>
+    <string name="variant">Variant</string>
+    <string name="results">Results</string>
+    <string name="t_points_of_t">%s/%s points</string>
+    <string name="t_points">%s points</string>
+    <string name="part_a">Part A</string>
+    <string name="part_b">Part B</string>
+    <string name="part_c">Part C</string>
+    <string name="part_d">Part D</string>
+    <string name="assign_id">Assign ID</string>
+    <string name="assign">Assign</string>
+    <string name="assign_id_help_description">If your rating became anonymous, you can assign ID to students from rating, and their names will appear in ratings. This data will be saved in your %s account, so you won\'t be required to fill this information again when re-logging.</string>
+    <string name="avatar">Avatar</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="series">Series</string>
+    <string name="number">Number</string>
+    <string name="issuer">Issuer</string>
+    <string name="issued">Issued</string>
+    <string name="subdivision_code">Subdivision code</string>
+    <string name="food_history">Dining history</string>
+    <string name="dining">Dining</string>
+    <string name="buffet">Buffet</string>
+    <string name="meal_dining_menu">Current menu</string>
+    <string name="price">Price</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="calories">Calories</string>
+    <string name="fats">Fats</string>
+    <string name="carbohydrates">Carbohydrates</string>
+    <string name="proteins">Proteins</string>
+    <string name="energy_value">%1$s kcal</string>
+    <string name="weight_grams">%1$s grams</string>
+    <string name="dining_history_is_not_loaded_yet">dining history is not loaded yet</string>
+    <string name="menu_for_t">Menu for %1$s</string>
+    <string name="select_date">Select a date</string>
+    <string name="wallet">Wallet</string>
+    <string name="balance">Balance</string>
+    <string name="top_up">Top up</string>
+    <string name="account_number">Account number</string>
+    <string name="loading">Loading…</string>
+</resources>
