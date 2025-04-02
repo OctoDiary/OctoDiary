@@ -1,9 +1,11 @@
 package org.bxkr.octodiary
 
+import android.content.Context
 import android.os.Build
+import org.koin.core.scope.Scope
 
-class AndroidPlatform : Platform {
-    override val name: String = "Android ${Build.VERSION.SDK_INT}"
+class AndroidPlatform(context: Context) : Platform {
+    override val name: String = "Android ${Build.VERSION.SDK_INT} - context $context"
 }
 
-actual fun getPlatform(): Platform = AndroidPlatform()
+actual fun getPlatform(scope: Scope): Platform = AndroidPlatform(scope.get())

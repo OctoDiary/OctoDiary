@@ -1,4 +1,4 @@
-package org.bxkr.octodiary.data.token
+package org.bxkr.octodiary.data.auth.token
 
 import org.bxkr.octodiary.network.apis.Region
 
