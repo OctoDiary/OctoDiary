@@ -1,14 +1,12 @@
 package org.bxkr.octodiary.data.auth.token
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import org.bxkr.octodiary.jwtPayloadTyped
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
-import kotlin.time.Instant
 
 abstract class JsonWebToken {
     abstract val value: String
 
-    @OptIn(ExperimentalTime::class)
     val expirationDate: Instant
         get() {
             val exp = getJwtFieldValue<Number>("exp")?.toLong()
@@ -19,7 +17,6 @@ abstract class JsonWebToken {
 
     val bearer get() = "Bearer $value"
 
-    @OptIn(ExperimentalTime::class)
     fun isAlive(): Boolean = Clock.System.now() < expirationDate
 
     protected inline fun <reified T> getJwtFieldValue(key: String): T? {
