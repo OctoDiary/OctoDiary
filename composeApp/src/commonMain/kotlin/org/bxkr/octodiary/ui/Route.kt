@@ -1,11 +1,8 @@
 package org.bxkr.octodiary.ui
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-fun routeFlow(): Flow<NavDestinations> = flow {
-    emit(NavDestinations.Home)
-}
+fun routeFlow(): MutableStateFlow<NavDestinations> = MutableStateFlow(NavDestinations.Diary)
 
 enum class NavDestinations(val route: String) {
     Diary("diary"),

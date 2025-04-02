@@ -8,13 +8,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import kmpdiary.composeapp.generated.resources.Res
 import kmpdiary.composeapp.generated.resources.app_name
+import kmpdiary.composeapp.generated.resources.auth
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OctoDiaryTopBar() {
+fun OctoDiaryTopBar(isAuthorized: Boolean = true) {
     val title by rememberTitleFlow().collectAsState(Title(Res.string.app_name))
     TopAppBar(
-        title = { Text(stringResource(title.stringResource)) }
+        title = { Text(stringResource(if (isAuthorized) title.stringResource else Res.string.auth)) }
     )
 }

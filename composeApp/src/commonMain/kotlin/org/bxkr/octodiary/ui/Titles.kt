@@ -9,13 +9,14 @@ import kmpdiary.composeapp.generated.resources.homeworks
 import kmpdiary.composeapp.generated.resources.marks
 import kmpdiary.composeapp.generated.resources.profile
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import org.jetbrains.compose.resources.StringResource
 import org.koin.compose.koinInject
 
 @Composable
 fun rememberTitleFlow(): Flow<Title> {
-    val routeFlow = koinInject<Flow<NavDestinations>>()
+    val routeFlow = koinInject<MutableStateFlow<NavDestinations>>()
     return remember {
         routeFlow.map {
             when (it) {
