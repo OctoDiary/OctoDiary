@@ -7,6 +7,9 @@ import org.bxkr.octodiary.data.RepositoryImpl
 import org.bxkr.octodiary.data.StorageLatest
 import org.bxkr.octodiary.data.auth.AuthManager
 import org.bxkr.octodiary.data.auth.AuthManagerImpl
+import org.bxkr.octodiary.data.auth.login.MosRuService
+import org.bxkr.octodiary.data.region.MosRegionService
+import org.bxkr.octodiary.data.region.MosregRegionService
 import org.bxkr.octodiary.data.storageVersion
 import org.bxkr.octodiary.getPaths
 import org.bxkr.octodiary.network.apis.MosAuthClient
@@ -29,9 +32,13 @@ val appModule = module {
     }
     single { routeFlow() }
     single { TopBarManager() }
+    single { MosRegionService() }
+    single { MosregRegionService() }
     singleOf(::RepositoryImpl) { bind<Repository>() }
     singleOf(::AuthManagerImpl) { bind<AuthManager>() }
     singleOf(::MosAuthClientImpl) { bind<MosAuthClient>() }
+
+    single { MosRuService() }
 
     viewModelOf(::AuthViewModel)
 }

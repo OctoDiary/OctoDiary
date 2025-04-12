@@ -46,7 +46,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,7 +77,6 @@ import kmpdiary.composeapp.generated.resources.region_not_implemented3
 import kmpdiary.composeapp.generated.resources.select_region
 import kmpdiary.composeapp.generated.resources.understood
 import kmpdiary.composeapp.generated.resources.welcome
-import kotlinx.coroutines.launch
 import org.bxkr.octodiary.Region
 import org.bxkr.octodiary.data.ExternalIntegration
 import org.bxkr.octodiary.data.Result
@@ -91,14 +89,13 @@ import org.bxkr.octodiary.ui.viewmodel.AuthViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun Step1(onGoNext: suspend () -> Unit) {
+fun Step1() {
     val vm = koinViewModel<AuthViewModel>()
     val isConnected by remember { vm.checkConnection() }.collectResult()
     var isConnectionDialogShown by remember { mutableStateOf(false) }
     var isConnectionBubbleHidden by remember { mutableStateOf(false) }
-    val currentChoice: MutableState<Region> = remember { mutableStateOf(Region.Moscow) }
+    val currentChoice: MutableState<Region> = remember { mutableStateOf(vm.region.value) }
     val nextStepAllowed = currentChoice.value in implementedRegions
-    val coroutineScope = rememberCoroutineScope()
 
     if (isConnectionDialogShown) {
         AlertDialog(
@@ -209,7 +206,10 @@ fun Step1(onGoNext: suspend () -> Unit) {
                     }
                 ) { targetState ->
                     Button(
-                        { coroutineScope.launch { onGoNext() } },
+                        {
+                            vm.setRegion(currentChoice.value)
+                            vm.goNext()
+                        },
                         Modifier
                             .padding(8.dp)
                             .height(64.dp)

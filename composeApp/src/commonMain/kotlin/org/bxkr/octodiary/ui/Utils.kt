@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.coroutines.flow.Flow
@@ -29,3 +30,6 @@ fun Int.pxToDp(): Dp = with(LocalDensity.current) { toDp() }
 
 @Composable
 fun TextUnit.toDp(): Dp = with(LocalDensity.current) { toDp() }
+
+@Composable
+fun goToUrl(url: String) = LocalUriHandler.current.openUri(url)

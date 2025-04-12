@@ -415,4 +415,13 @@
     <string name="understood">OK</string>
     <string name="diary_system">Diary: %1$s</string>
     <string name="more_details">Details</string>
+    <string name="continue_in_telegram">Go to Telegram</string>
+    <string name="mosru_login">mos.ru</string>
+    <string name="mosru_login_suffix">recommended</string>
+    <string name="mosru_login_desc">Log in through your browser, with ability to use saved session or password</string>
+    <string name="mosru_wv_login">mos.ru</string>
+    <string name="mosru_wv_suffix">in-app</string>
+    <string name="mosru_wv_login_desc">Open mos.ru login page directly in this app if you have any troubles with browser</string>
+    <string name="telegram_login">Telegram bot login</string>
+    <string name="telegram_login_desc">If you use our bot or want to log in from different device, try this way</string>
 </resources>

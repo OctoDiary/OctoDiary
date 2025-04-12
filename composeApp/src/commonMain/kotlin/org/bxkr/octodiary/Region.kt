@@ -1,5 +1,6 @@
 package org.bxkr.octodiary
 
+import androidx.compose.runtime.Composable
 import kmpdiary.composeapp.generated.resources.Res
 import kmpdiary.composeapp.generated.resources.chechnya
 import kmpdiary.composeapp.generated.resources.dagestan
@@ -15,6 +16,7 @@ import org.bxkr.octodiary.data.region.MosRegionService
 import org.bxkr.octodiary.data.region.MosregRegionService
 import org.bxkr.octodiary.data.region.RegionService
 import org.jetbrains.compose.resources.StringResource
+import org.koin.compose.koinInject
 
 enum class Region(val regionCode: String, val isCapital: Boolean = false) {
     Moscow("77", isCapital = true),
@@ -56,9 +58,9 @@ val implementedRegions = arrayOf(
 //    Region.Yamal
 )
 
-val Region.service: RegionService
-    get() = when (this) {
-        Region.Moscow -> MosRegionService()
-        Region.Suburb -> MosregRegionService()
-        else -> throw NotImplementedError("This region is not yet implemented.")
-    }
+@Composable
+fun Region.getService(): RegionService = when (this) {
+    Region.Moscow -> koinInject<MosRegionService>()
+    Region.Suburb -> koinInject<MosregRegionService>()
+    else -> throw NotImplementedError("This region is not yet implemented.")
+}
