@@ -1,5 +1,7 @@
 package org.bxkr.octodiary.network.apis
 
+import org.bxkr.octodiary.Region
+
 class BaseUrl(
     val mainSchoolApi: String,
     val dSchoolApi: String,

@@ -1,6 +1,6 @@
 package org.bxkr.octodiary.data.auth.token
 
-import org.bxkr.octodiary.network.apis.Region
+import org.bxkr.octodiary.Region
 
 class MesToken(override val value: String) : JsonWebToken() {
     /**

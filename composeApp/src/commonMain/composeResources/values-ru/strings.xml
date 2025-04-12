@@ -337,4 +337,24 @@
     <string name="top_up">Пополнение</string>
     <string name="account_number">Лицевой счёт</string>
     <string name="loading">Загрузка…</string>
+    <string name="welcome">Добро пожаловать в %1$s!</string>
+    <string name="select_region">Выбери регион</string>
+    <string name="moscow">Москва</string>
+    <string name="mosreg">Московская область</string>
+    <string name="kaluga">Калужская область</string>
+    <string name="tatarstan">Республика Татарстан</string>
+    <string name="dagestan">Республика Дагестан</string>
+    <string name="tumen">Тюменская область</string>
+    <string name="chechnya">Республика Чечня</string>
+    <string name="yamal">Ямало-Ненецкий автономный округ</string>
+    <string name="next_step">Далее</string>
+    <string name="region_not_implemented1">Этот регион пока не добавлен, но </string>
+    <string name="region_not_implemented2">ты можешь помочь нам сделать это</string>
+    <string name="region_not_implemented3">!</string>
+    <string name="mosru_unavailable">mos.ru недоступен</string>
+    <string name="mosru_unavailable_title">Сервера недоступны</string>
+    <string name="mosru_unavailable_description">Похоже, ты находишься в другой стране или включил VPN. Скорее всего, сейчас ничего работать не будет</string>
+    <string name="understood">Понятно</string>
+    <string name="diary_system">Система %1$s</string>
+    <string name="more_details">Подробнее</string>
 </resources>

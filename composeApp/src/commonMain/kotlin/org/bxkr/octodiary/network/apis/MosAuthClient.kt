@@ -1,23 +1,29 @@
-package org.bxkr.octodiary.network
+package org.bxkr.octodiary.network.apis
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.timeout
 import io.ktor.client.request.post
+import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.io.IOException
 import kotlinx.serialization.SerialName
 import org.bxkr.octodiary.authHeader
 import org.bxkr.octodiary.defaultErrorDescription
 import org.bxkr.octodiary.exception.IssueCallException
+import org.bxkr.octodiary.exception.NetworkException
 import org.bxkr.octodiary.model.internal.ClientCredentials
 
 interface MosAuthClient {
     suspend fun issueCall(): ClientCredentials
+    suspend fun checkConnection(): Boolean
 }
 
 class MosAuthClientImpl : MosAuthClient {
@@ -53,23 +59,44 @@ class MosAuthClientImpl : MosAuthClient {
     }
 
     override suspend fun issueCall(): ClientCredentials {
-        val response = client.post("sps/oauth/register") {
-            authHeader(AUTH_ISSUER_SECRET)
-            contentType(ContentType.Application.Json)
-            setBody(object {
-                @SerialName("software_id")
-                val softwareId = SOFTWARE_ID
-                @SerialName("device_type")
-                val deviceType = DEVICE_TYPE
-                @SerialName("software_statement")
-                val softwareStatement = MOCK_SOFTWARE_STATEMENT
-            })
-        }
-
         try {
-            return response.body()
-        } catch (exception: NoTransformationFoundException) {
-            throw IssueCallException(response.defaultErrorDescription())
+            val response = client.post("sps/oauth/register") {
+                authHeader(AUTH_ISSUER_SECRET)
+                contentType(ContentType.Application.Json)
+                setBody(object {
+                    @SerialName("software_id")
+                    val softwareId = SOFTWARE_ID
+
+                    @SerialName("device_type")
+                    val deviceType = DEVICE_TYPE
+
+                    @SerialName("software_statement")
+                    val softwareStatement = MOCK_SOFTWARE_STATEMENT
+                })
+            }
+
+            try {
+                return response.body()
+            } catch (exception: NoTransformationFoundException) {
+                throw IssueCallException(response.defaultErrorDescription())
+            }
+        } catch (exception: IOException) {
+            throw NetworkException()
+        }
+    }
+
+    override suspend fun checkConnection(): Boolean {
+        try {
+            val response = client.request("https://mos.ru") {
+                timeout {
+                    connectTimeoutMillis = 1000
+                    requestTimeoutMillis = 1000
+                    socketTimeoutMillis = 1000
+                }
+            }
+            return response.status.isSuccess()
+        } catch (exception: IOException) {
+            return false
         }
     }
 }

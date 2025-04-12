@@ -17,19 +17,22 @@ import org.bxkr.octodiary.data.auth.PreAuthManager
 import org.bxkr.octodiary.ui.NavDestinations
 import org.bxkr.octodiary.ui.OctoDiaryTheme
 import org.bxkr.octodiary.ui.OctoDiaryTopBar
+import org.bxkr.octodiary.ui.TopBarManager
 import org.bxkr.octodiary.ui.collectResult
-import org.bxkr.octodiary.ui.screens.AuthScreen
 import org.bxkr.octodiary.ui.screens.HomeScreen
+import org.bxkr.octodiary.ui.screens.auth.AuthScreen
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 
 @Composable
 fun App() {
     KoinContext {
+        val topBarManager = koinInject<TopBarManager>()
         val coroutineScope = rememberCoroutineScope()
         val routeFlow = koinInject<MutableStateFlow<NavDestinations>>()
         val navController = rememberNavController()
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            topBarManager.clearActions()
             coroutineScope.launch {
                 destination.route?.let { NavDestinations.entries.first { it1 -> it1.route == it } }
                     ?.let { routeFlow.emit(it) }

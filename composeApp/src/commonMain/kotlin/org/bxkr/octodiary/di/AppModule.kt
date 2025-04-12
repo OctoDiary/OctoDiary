@@ -9,11 +9,14 @@ import org.bxkr.octodiary.data.auth.AuthManager
 import org.bxkr.octodiary.data.auth.AuthManagerImpl
 import org.bxkr.octodiary.data.storageVersion
 import org.bxkr.octodiary.getPaths
-import org.bxkr.octodiary.network.MosAuthClient
-import org.bxkr.octodiary.network.MosAuthClientImpl
+import org.bxkr.octodiary.network.apis.MosAuthClient
+import org.bxkr.octodiary.network.apis.MosAuthClientImpl
+import org.bxkr.octodiary.ui.TopBarManager
 import org.bxkr.octodiary.ui.routeFlow
+import org.bxkr.octodiary.ui.viewmodel.AuthViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
@@ -25,7 +28,10 @@ val appModule = module {
         )
     }
     single { routeFlow() }
+    single { TopBarManager() }
     singleOf(::RepositoryImpl) { bind<Repository>() }
     singleOf(::AuthManagerImpl) { bind<AuthManager>() }
     singleOf(::MosAuthClientImpl) { bind<MosAuthClient>() }
+
+    viewModelOf(::AuthViewModel)
 }

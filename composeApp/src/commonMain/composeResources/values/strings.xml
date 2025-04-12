@@ -395,4 +395,24 @@
     <string name="top_up">Top up</string>
     <string name="account_number">Account number</string>
     <string name="loading">Loading…</string>
+    <string name="welcome">Welcome to %1$s!</string>
+    <string name="select_region">Select your region</string>
+    <string name="moscow">Moscow</string>
+    <string name="mosreg">Moscow Region</string>
+    <string name="kaluga">Kaluga Region</string>
+    <string name="tatarstan">Tatarstan</string>
+    <string name="dagestan">Dagestan</string>
+    <string name="tumen">Tumen Region</string>
+    <string name="chechnya">Checnya</string>
+    <string name="yamal">YaNAO</string>
+    <string name="next_step">Next Step</string>
+    <string name="region_not_implemented1">This region is not implemented yet, but </string>
+    <string name="region_not_implemented2">you can help us to do so</string>
+    <string name="region_not_implemented3">!</string>
+    <string name="mosru_unavailable">mos.ru is unreachable</string>
+    <string name="mosru_unavailable_title">Servers are unreachable</string>
+    <string name="mosru_unavailable_description">Looks like you are not in Russia or VPN is turned on. Maybe nothing will work</string>
+    <string name="understood">OK</string>
+    <string name="diary_system">Diary: %1$s</string>
+    <string name="more_details">Details</string>
 </resources>
