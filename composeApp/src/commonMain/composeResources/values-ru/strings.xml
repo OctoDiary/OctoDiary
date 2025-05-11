@@ -123,7 +123,6 @@
     <string name="weighted_average">Взвешенный</string>
     <string name="error_dialog_title">Сервер ответил ошибкой!</string>
     <string name="error_dialog_description">Похоже, на стороне сервера произошла внутренняя ошибка. Вы можете попробовать перезайти в аккаунт или повторить попытку позже.</string>
-    <string name="try_again">Повторить</string>
     <string name="delete_avatar">Удалить аватар</string>
     <string name="avatar_deletion_is_currently_unsupported">Удалить аватар пока нельзя</string>
     <string name="show_more">Показать больше</string>
@@ -357,12 +356,28 @@
     <string name="understood">Понятно</string>
     <string name="diary_system">Система %1$s</string>
     <string name="more_details">Подробнее</string>
-    <string name="continue_in_telegram">Продолжить в Telegram</string>
+    <string name="continue_in_telegram">В Telegram</string>
     <string name="mosru_login">mos.ru</string>
     <string name="mosru_login_suffix">рекомендовано</string>
     <string name="mosru_login_desc">Авторизуйся в своем браузере, чтобы использовать существующую сессию или сохраненные пароли</string>
     <string name="mosru_wv_login">mos.ru внутри приложения</string>
     <string name="mosru_wv_login_desc">Страница входа откроется прямо здесь, если у тебя есть какие-то проблемы с браузером</string>
+    <string name="mosru_wv_login_desc_ios">Страница входа откроется прямо здесь для ввода данных, необходимых для авторизации</string>
     <string name="telegram_login">Через Telegram-бота</string>
     <string name="telegram_login_desc">Если пользуешься нашим ботом или хочешь войти с другого устройства, попробуй этот вариант</string>
+    <string name="auth_methods">Способы входа</string>
+    <string name="network_error_occurred">Произошла ошибка соединения!</string>
+    <string name="server_error_occurred">Произошла ошибка API!</string>
+    <string name="internal_error_occurred">Произошла внутренняя ошибка!</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="copy_error_description">Скопировать текст ошибки</string>
+    <string name="loading_register_session_title">Регистрация аутентификационной сессии</string>
+    <string name="loading_register_session_step1">Получение конфигурации</string>
+    <string name="loading_handle_code_title">Обработка кода авторизации</string>
+    <string name="loading_handle_code_step1">Аутентификация на mos.ru</string>
+    <string name="loading_handle_code_step2">Получение токена МЭШ</string>
+    <string name="server_error_authorized">Похоже, у МЭШ сбой или технические работы. Попробуй позже, если ситуация не изменится, перезайди в аккаунт</string>
+    <string name="server_error_not_authorized">Похоже, у МЭШ сбой или технические работы. Попробуй повторить запрос позже</string>
+    <string name="network_error_description">Похоже, у тебя неполадки с интернетом, ты в другой стране или включил VPN. Так ничего работать не будет</string>
+    <string name="internal_error_description">Произошла непредвиденная ошибка. Пожалуйста, сообщи об этом в поддержку</string>
 </resources>

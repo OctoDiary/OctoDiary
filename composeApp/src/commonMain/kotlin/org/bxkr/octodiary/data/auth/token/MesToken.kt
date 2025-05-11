@@ -9,7 +9,7 @@ class MesToken(override val value: String) : JsonWebToken() {
      */
     val issuer: Region
         get() {
-            val iss = getJwtFieldValue<String>("iss")
+            val iss = payload?.issuer
             return when (iss) {
                 "https://school.mos.ru" -> Region.Moscow
                 "https://authedu.mosreg.ru" -> Region.Suburb
@@ -18,7 +18,7 @@ class MesToken(override val value: String) : JsonWebToken() {
         }
 
     val personId: String
-        get() = getJwtFieldValue<String>("msh")
+        get() = payload?.personId
             ?: throw IllegalArgumentException("MES JWT does not contain person ID. $value")
 
     val cookie

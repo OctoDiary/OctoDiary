@@ -3,39 +3,50 @@ package org.bxkr.octodiary.network.apis
 import io.ktor.client.HttpClient
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.timeout
+import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.post
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import io.ktor.http.parameters
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.core.toByteArray
 import kotlinx.io.IOException
-import kotlinx.serialization.SerialName
 import org.bxkr.octodiary.authHeader
+import org.bxkr.octodiary.data.MosRuInfo
+import org.bxkr.octodiary.data.Result
+import org.bxkr.octodiary.data.auth.token.MesToken
 import org.bxkr.octodiary.defaultErrorDescription
-import org.bxkr.octodiary.exception.IssueCallException
-import org.bxkr.octodiary.exception.NetworkException
+import org.bxkr.octodiary.defaultInternalErrorDescription
+import org.bxkr.octodiary.defaultNetworkErrorDescription
+import org.bxkr.octodiary.encodeToBase64
+import org.bxkr.octodiary.json
+import org.bxkr.octodiary.model.api.login.mosru.IssueCallBody
+import org.bxkr.octodiary.model.api.login.mosru.MosToMes
+import org.bxkr.octodiary.model.api.login.mosru.TokenExchange
 import org.bxkr.octodiary.model.internal.ClientCredentials
 
 interface MosAuthClient {
-    suspend fun issueCall(): ClientCredentials
+    suspend fun issueCall(): Result<ClientCredentials>
     suspend fun checkConnection(): Boolean
+    suspend fun handleCode(
+        code: String,
+        credentials: MosRuInfo
+    ): Result<TokenExchange>
+
+    suspend fun mosToMes(mosToken: String): Result<MesToken>
 }
 
 class MosAuthClientImpl : MosAuthClient {
     private companion object {
-        const val SCOPE =
-            "birthday contacts openid profile snils blitz_change_password blitz_user_rights blitz_qr_auth"
-        const val RESPONSE_TYPE = "code"
-        const val PROMPT = "login"
-        const val BIP_ACTION_HINT = "used_sms"
-        const val REDIRECT_URI = "dnevnik-mes://oauth2redirect"
-        const val ACCESS_TYPE = "offline"
-        const val CODE_CHALLENGE_METHOD = "S256"
+        const val MOS_AUTH_BASEURL = "https://login.mos.ru/"
+
         const val AUTH_ISSUER_SECRET =
             "Bearer FqzGn1dTJ9BQCHgV0rmMjtYFIgaFf9TrGVEzgtju-zbtIbeJSkIyDcl0e2QMirTNpEqovTT8NvOLZI0XklVEIw"
         const val MOCK_SOFTWARE_STATEMENT =
@@ -43,60 +54,114 @@ class MosAuthClientImpl : MosAuthClient {
         const val SOFTWARE_ID = "dnevnik.mos.ru"
         const val DEVICE_TYPE = "android_phone"
         const val GRANT_TYPE_CODE = "authorization_code"
+        const val REDIRECT_URI = "dnevnik-mes://oauth2redirect"
         const val GRANT_TYPE_REFRESH = "refresh_token"
-
-        private fun getRandomString(length: Int): String {
-            val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') + '_' + '-'
-            return (1..length)
-                .map { allowedChars.random() }
-                .joinToString("")
-        }
     }
 
     private val client = HttpClient {
-        install(ContentNegotiation) { json() }
-        defaultRequest { url("https://login.mos.ru/") }
+        install(ContentNegotiation) { json(json) }
+        defaultRequest { url(MOS_AUTH_BASEURL) }
+        install(HttpTimeout) {
+            requestTimeoutMillis = 7000
+            connectTimeoutMillis = 7000
+            socketTimeoutMillis = 7000
+        }
     }
 
-    override suspend fun issueCall(): ClientCredentials {
-        try {
+    override suspend fun issueCall(): Result<ClientCredentials> {
+        return try {
             val response = client.post("sps/oauth/register") {
                 authHeader(AUTH_ISSUER_SECRET)
                 contentType(ContentType.Application.Json)
-                setBody(object {
-                    @SerialName("software_id")
-                    val softwareId = SOFTWARE_ID
-
-                    @SerialName("device_type")
-                    val deviceType = DEVICE_TYPE
-
-                    @SerialName("software_statement")
-                    val softwareStatement = MOCK_SOFTWARE_STATEMENT
-                })
+                setBody(
+                    IssueCallBody(
+                        SOFTWARE_ID,
+                        DEVICE_TYPE,
+                        MOCK_SOFTWARE_STATEMENT
+                    )
+                )
             }
 
             try {
-                return response.body()
+                Result.Success(response.body())
             } catch (exception: NoTransformationFoundException) {
-                throw IssueCallException(response.defaultErrorDescription())
+                Result.Error(response.defaultErrorDescription(), Result.ErrorType.Server)
             }
         } catch (exception: IOException) {
-            throw NetworkException()
+            Result.Error(exception.defaultNetworkErrorDescription(), Result.ErrorType.Network)
         }
     }
 
     override suspend fun checkConnection(): Boolean {
         try {
-            val response = client.request("https://mos.ru") {
+            val response = client.request("https://www.mos.ru") {
                 timeout {
-                    connectTimeoutMillis = 1000
-                    requestTimeoutMillis = 1000
-                    socketTimeoutMillis = 1000
+                    requestTimeoutMillis = 3000
+                    connectTimeoutMillis = 3000
+                    socketTimeoutMillis = 3000
                 }
             }
             return response.status.isSuccess()
         } catch (exception: IOException) {
             return false
+        }
+    }
+
+    override suspend fun handleCode(code: String, credentials: MosRuInfo): Result<TokenExchange> {
+        return try {
+            val authorization =
+                encodeToBase64("${credentials.clientId}:${credentials.clientSecret}".toByteArray())
+            val authHeader = "Basic $authorization"
+
+            val response = client.submitForm(
+                "sps/oauth/te",
+                formParameters = parameters {
+                    append("grant_type", GRANT_TYPE_CODE)
+                    append("redirect_uri", REDIRECT_URI)
+                    append("code", code)
+                    append("code_verifier", credentials.codeVerifier)
+                }
+            ) {
+                authHeader(authHeader)
+            }
+
+            try {
+                Result.Success(response.body())
+            } catch (exception: NoTransformationFoundException) {
+                Result.Error(response.defaultErrorDescription(), Result.ErrorType.Server)
+            }
+        } catch (exception: IOException) {
+            Result.Error(exception.defaultNetworkErrorDescription(), Result.ErrorType.Network)
+        } catch (exception: Exception) {
+            Result.Error(
+                exception.defaultInternalErrorDescription(
+                    "code: $code; credentials: ${json.encodeToString(credentials)}"
+                ), Result.ErrorType.Internal
+            )
+        }
+    }
+
+    override suspend fun mosToMes(mosToken: String): Result<MesToken> {
+        return try {
+            val response = client.post("https://school.mos.ru/v3/auth/sudir/auth") {
+                contentType(ContentType.Application.Json)
+                setBody(MosToMes(MosToMes.Companion.MosToMesRequest(mosToken)))
+            }
+
+            try {
+                val responseParsed = response.body<MosToMes.Companion.MosToMesResponse>()
+                Result.Success(MesToken(responseParsed.response.meshAccessToken))
+            } catch (exception: NoTransformationFoundException) {
+                Result.Error(response.defaultErrorDescription(), Result.ErrorType.Server)
+            }
+        } catch (exception: IOException) {
+            Result.Error(exception.defaultNetworkErrorDescription(), Result.ErrorType.Network)
+        } catch (exception: Exception) {
+            Result.Error(
+                exception.defaultInternalErrorDescription(
+                    "mos token: $mosToken"
+                ), Result.ErrorType.Internal
+            )
         }
     }
 }

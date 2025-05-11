@@ -2,6 +2,7 @@ package org.bxkr.octodiary.di
 
 import io.github.xxfast.kstore.file.extensions.storeOf
 import kotlinx.io.files.Path
+import org.bxkr.octodiary.DeeplinkHolder
 import org.bxkr.octodiary.data.Repository
 import org.bxkr.octodiary.data.RepositoryImpl
 import org.bxkr.octodiary.data.StorageLatest
@@ -17,12 +18,14 @@ import org.bxkr.octodiary.network.apis.MosAuthClientImpl
 import org.bxkr.octodiary.ui.TopBarManager
 import org.bxkr.octodiary.ui.routeFlow
 import org.bxkr.octodiary.ui.viewmodel.AuthViewModel
+import org.bxkr.octodiary.ui.viewmodel.HomeViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
+    single { DeeplinkHolder() }
     single {
         storeOf<StorageLatest>(
             file = Path("${getPaths().files}/main"),
@@ -41,4 +44,5 @@ val appModule = module {
     single { MosRuService() }
 
     viewModelOf(::AuthViewModel)
+    viewModelOf(::HomeViewModel)
 }

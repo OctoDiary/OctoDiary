@@ -6,4 +6,7 @@ interface Platform {
     val name: String
 }
 
+interface IOSPlatform : Platform
+interface AndroidPlatform : Platform
+
 expect fun getPlatform(scope: Scope): Platform

@@ -4,13 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.coroutines.flow.Flow
+import org.bxkr.octodiary.Platform
 import org.bxkr.octodiary.data.Result
+import org.bxkr.octodiary.getPlatform
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.currentKoinScope
 
 @Composable
 fun <T> Flow<Result<T>>.collectResult(): State<Result<T>> = collectAsState(Result.Loading)
@@ -32,4 +34,4 @@ fun Int.pxToDp(): Dp = with(LocalDensity.current) { toDp() }
 fun TextUnit.toDp(): Dp = with(LocalDensity.current) { toDp() }
 
 @Composable
-fun goToUrl(url: String) = LocalUriHandler.current.openUri(url)
+fun platform(): Platform = getPlatform(currentKoinScope())

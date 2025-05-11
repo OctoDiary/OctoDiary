@@ -42,6 +42,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -91,7 +92,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun Step1() {
     val vm = koinViewModel<AuthViewModel>()
-    val isConnected by remember { vm.checkConnection() }.collectResult()
+    LaunchedEffect(Unit) { vm.checkConnection() }
+    val isConnected by remember { vm.isConnected }.collectResult()
     var isConnectionDialogShown by remember { mutableStateOf(false) }
     var isConnectionBubbleHidden by remember { mutableStateOf(false) }
     val currentChoice: MutableState<Region> = remember { mutableStateOf(vm.region.value) }

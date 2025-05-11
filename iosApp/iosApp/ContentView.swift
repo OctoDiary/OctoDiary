@@ -13,7 +13,10 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
     var body: some View {
         ComposeView()
-                .ignoresSafeArea() // Compose has own keyboard handler
+            .ignoresSafeArea() // Compose has own keyboard handler
+            .onOpenURL { url in
+                KoinAppKt.getDeeplinkHolder().updateDeeplink(url: url.absoluteString)
+            }
     }
 }
 

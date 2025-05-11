@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,6 +54,7 @@ data class FooterInput(
     val text: StringResource,
     val icon: ImageVector,
     val additionalIcon: FooterAdditionalIcon?,
+    val isLoading: Boolean = false,
     val onClick: () -> Unit
 )
 
@@ -108,10 +112,30 @@ fun CommonFooter(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(targetState.text.resolve())
-                        Icon(
-                            targetState.icon,
-                            null
-                        )
+                        Box(Modifier.size(24.dp)) {
+                            androidx.compose.animation.AnimatedVisibility(
+                                footerInput.isLoading,
+                                enter = fadeIn(), exit = fadeOut()
+                            ) {
+                                Box(Modifier.size(24.dp), contentAlignment = Alignment.Center) {
+                                    CircularProgressIndicator(
+                                        Modifier.size(16.dp),
+                                        color = LocalContentColor.current,
+                                        strokeWidth = 2.dp
+                                    )
+                                }
+                            }
+                            androidx.compose.animation.AnimatedVisibility(
+                                !footerInput.isLoading,
+                                enter = fadeIn(), exit = fadeOut()
+                            ) {
+                                Icon(
+                                    targetState.icon,
+                                    null,
+                                    Modifier.size(24.dp)
+                                )
+                            }
+                        }
                     }
                 }
                 if (targetState.additionalIcon != null)

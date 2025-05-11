@@ -175,7 +175,6 @@
     <string name="weighted_average">Weighted</string>
     <string name="error_dialog_title">The server responded with an error!</string>
     <string name="error_dialog_description">Looks like an internal error has occurred on the server side. You can try logging into your account or try again later.</string>
-    <string name="try_again">Try again</string>
     <string name="delete_avatar">Remove an avatar</string>
     <string name="avatar_deletion_is_currently_unsupported">Avatar deletion is currently unsupported</string>
     <string name="show_more">Show more</string>
@@ -422,6 +421,18 @@
     <string name="mosru_wv_login">mos.ru</string>
     <string name="mosru_wv_suffix">in-app</string>
     <string name="mosru_wv_login_desc">Open mos.ru login page directly in this app if you have any troubles with browser</string>
+    <string name="mosru_wv_login_desc_ios">Open mos.ru login page directly in this app for entering your username and password</string>
     <string name="telegram_login">Telegram bot login</string>
     <string name="telegram_login_desc">If you use our bot or want to log in from different device, try this way</string>
+    <string name="auth_methods">Log in methods</string>
+    <string name="network_error_occurred">Network error occurred!</string>
+    <string name="server_error_occurred">Server error occurred!</string>
+    <string name="internal_error_occurred">Internal error occurred!</string>
+    <string name="try_again">Try again</string>
+    <string name="copy_error_description">Copy error description</string>
+    <string name="loading_register_session_title">Authentication session registration</string>
+    <string name="loading_register_session_step1">Obtaining configuration</string>
+    <string name="loading_handle_code_title">Handling authorization code</string>
+    <string name="loading_handle_code_step1">mos.ru authentication</string>
+    <string name="loading_handle_code_step2">Obtaining MES token</string>
 </resources>

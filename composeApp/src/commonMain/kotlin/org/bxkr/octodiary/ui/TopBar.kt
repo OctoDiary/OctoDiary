@@ -20,17 +20,21 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OctoDiaryTopBar(isAuthorized: Boolean = true, topBarManager: TopBarManager = koinInject()) {
+    val navigation by topBarManager.navigation.collectAsState()
     val actions by topBarManager.actions.collectAsState()
     val title by rememberTitleFlow().collectAsState(Title(Res.string.app_name))
+    val customTitle by topBarManager.customTitle.collectAsState()
     TopAppBar(
         title = {
             AnimatedContent(
-                isAuthorized,
+                isAuthorized to customTitle,
                 transitionSpec = {
                     fadeIn().togetherWith(fadeOut())
                 }
             ) {
-                Text((if (it) title.stringResource else Res.string.auth).resolve())
+                (if (it.second == null) {
+                    (if (it.first) title.stringResource else Res.string.auth).resolve()
+                } else it.second)?.let { it1 -> Text(it1) }
             }
         },
         actions = {
@@ -42,15 +46,37 @@ fun OctoDiaryTopBar(isAuthorized: Boolean = true, topBarManager: TopBarManager =
             ) {
                 it.invoke()
             }
+        },
+        navigationIcon = {
+            AnimatedContent(
+                navigation,
+                transitionSpec = {
+                    fadeIn().togetherWith(fadeOut())
+                }
+            ) {
+                it.invoke()
+            }
         }
     )
 }
 
 class TopBarManager {
+    private val _navigation: MutableStateFlow<@Composable () -> Unit> = MutableStateFlow {}
     private val _actions: MutableStateFlow<@Composable () -> Unit> =
         MutableStateFlow {}
+    private val _customTitle: MutableStateFlow<String?> = MutableStateFlow(null)
 
+    val navigation = _navigation.asStateFlow()
     val actions = _actions.asStateFlow()
+    val customTitle = _customTitle.asStateFlow()
+
+    fun setNavigation(content: @Composable () -> Unit) {
+        _navigation.value = content
+    }
+
+    fun clearNavigation() {
+        _navigation.value = {}
+    }
 
     fun setActions(content: @Composable () -> Unit) {
         _actions.value = content
@@ -58,5 +84,9 @@ class TopBarManager {
 
     fun clearActions() {
         _actions.value = {}
+    }
+
+    fun overrideTitle(title: String? = null) {
+        _customTitle.value = title
     }
 }

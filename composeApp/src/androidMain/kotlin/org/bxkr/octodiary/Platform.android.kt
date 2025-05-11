@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Build
 import org.koin.core.scope.Scope
 
-class AndroidPlatform(context: Context) : Platform {
+class AndroidPlatformImpl(context: Context) : AndroidPlatform {
     override val name: String = "Android ${Build.VERSION.SDK_INT} - context $context"
 }
 
-actual fun getPlatform(scope: Scope): Platform = AndroidPlatform(scope.get())
+actual fun getPlatform(scope: Scope): Platform = AndroidPlatformImpl(scope.get())

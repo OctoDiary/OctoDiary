@@ -72,6 +72,12 @@ kotlin {
             // KStore
             implementation(libs.kstore)
             implementation(libs.kstore.file)
+
+            // WebViewMultiplatform
+            api(libs.compose.webview.multiplatform)
+
+            // Okio
+            implementation(libs.okio)
         }
     }
 }

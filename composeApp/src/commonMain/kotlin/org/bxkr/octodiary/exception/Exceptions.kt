@@ -6,4 +6,5 @@ abstract class ApiException(description: String? = null) : Exception(description
 
 open class AuthException(description: String? = null) : ApiException(description)
 
-class IssueCallException(description: String? = null) : AuthException(description)
+/** Should be thrown when token is dead according to JWT payload  */
+class DeadTokenException : AuthException()
