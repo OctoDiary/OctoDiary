@@ -27,6 +27,7 @@ import kmpdiary.composeapp.generated.resources.loading_handle_code_title
 import kmpdiary.composeapp.generated.resources.loading_register_session_step1
 import kmpdiary.composeapp.generated.resources.loading_register_session_title
 import kotlinx.coroutines.launch
+import org.bxkr.octodiary.Region
 import org.bxkr.octodiary.data.MosRuInfo
 import org.bxkr.octodiary.data.RefreshInfo
 import org.bxkr.octodiary.data.Result
@@ -202,7 +203,7 @@ class MosRuService : KoinComponent {
                         val call2 = mosAuthClient.mosToMes(call1.value.accessToken)
                         result2.value = call2
                         if (call2 is Result.Success<MesToken>) {
-                            authManager.updateAccessToken(call2.value.value)
+                            authManager.authorize(call2.value.value, Region.Moscow)
                             viewModel.authFinished()
                         }
                     }
