@@ -1,7 +1,6 @@
 package org.bxkr.octodiary.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import org.bxkr.octodiary.domain.model.Diary
 import org.bxkr.octodiary.domain.model.DiaryId
 import org.bxkr.octodiary.domain.model.Region
@@ -13,6 +12,7 @@ import org.bxkr.octodiary.domain.model.auth.LogoutResult
 import org.bxkr.octodiary.domain.model.auth.TokenInfo
 
 interface AuthRepository {
+    suspend fun normalizeAuthState()
     fun getAuthStateFlow(): Flow<AuthState>
     suspend fun processAuthStep(credentials: Credentials, diarySystem: Diary): AuthStepResult
     suspend fun logout(): LogoutResult

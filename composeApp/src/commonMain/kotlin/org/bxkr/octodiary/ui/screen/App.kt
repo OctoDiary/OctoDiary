@@ -16,6 +16,7 @@ import org.bxkr.octodiary.ui.component.AnimatedVisibilityFade
 import org.bxkr.octodiary.ui.component.DebugMenu
 import org.bxkr.octodiary.ui.screen.auth.AuthScreen
 import org.bxkr.octodiary.ui.screen.auth.CallbackScreen
+import org.bxkr.octodiary.ui.screen.nav.NavScreen
 import org.bxkr.octodiary.ui.theme.OctoDiaryTheme
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -26,22 +27,24 @@ fun App() {
     val uiState by mainViewModel.uiState.collectAsState()
 
     OctoDiaryTheme {
-        Box {
-            if (uiState.isDebugMenuOpened) DebugMenu { mainViewModel.closeDebugMenu() }
-            uiState.authState.run {
-                AnimatedVisibilityFade(this is AuthState.NotAuthorized || this is AuthState.Callback.WaitingForCallback) {
-                    AuthScreen()
-                }
-                AnimatedVisibilityFade(this is AuthState.Authorized) {
-                    NavScreen()
-                }
-                AnimatedVisibilityFade(this is AuthState.Callback.HandlingCallback || this is AuthState.Callback.FailedToHandle) {
-                    (this as? AuthState.Callback)?.let { CallbackScreen(it) }
-                }
-                AnimatedVisibilityFade(this == null) {
-                    Surface {
-                        Box(Modifier.fillMaxSize()) {
-                            LoadingIndicator(Modifier.align(Alignment.Center))
+        Surface {
+            Box {
+                if (uiState.isDebugMenuOpened) DebugMenu { mainViewModel.closeDebugMenu() }
+                uiState.authState.run {
+                    AnimatedVisibilityFade(this is AuthState.NotAuthorized || this is AuthState.Callback.WaitingForCallback) {
+                        AuthScreen()
+                    }
+                    AnimatedVisibilityFade(this is AuthState.Authorized) {
+                        NavScreen()
+                    }
+                    AnimatedVisibilityFade(this is AuthState.Callback.HandlingCallback || this is AuthState.Callback.FailedToHandle) {
+                        (this as? AuthState.Callback)?.let { CallbackScreen(it) }
+                    }
+                    AnimatedVisibilityFade(this == null) {
+                        Surface {
+                            Box(Modifier.fillMaxSize()) {
+                                LoadingIndicator(Modifier.align(Alignment.Center))
+                            }
                         }
                     }
                 }

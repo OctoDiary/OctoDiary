@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.bxkr.octodiary.domain.usecase.auth.GetAuthStateFlowUseCase
+import org.bxkr.octodiary.domain.usecase.auth.NormalizeAppStateUseCase
 import org.bxkr.octodiary.domain.usecase.auth.StartCollectingDeeplinkUseCase
 import org.bxkr.octodiary.presentation.state.MainUiState
 import org.koin.android.annotation.KoinViewModel
@@ -15,12 +16,16 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class MainViewModel(
     private val getAuthStateFlowUseCase: GetAuthStateFlowUseCase,
-    private val startCollectingDeeplinkUseCase: StartCollectingDeeplinkUseCase
+    private val startCollectingDeeplinkUseCase: StartCollectingDeeplinkUseCase,
+    private val normalizeAppStateUseCase: NormalizeAppStateUseCase
 ) : BaseViewModel<MainUiState>() {
     override val _uiState = MutableStateFlow(MainUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            normalizeAppStateUseCase()
+        }
         viewModelScope.launch {
             getAuthStateFlowUseCase().onEach { authState ->
                 uu { it.copy(authState = authState) }

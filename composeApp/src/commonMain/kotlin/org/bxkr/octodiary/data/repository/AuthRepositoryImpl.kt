@@ -2,14 +2,10 @@ package org.bxkr.octodiary.data.repository
 
 import io.github.xxfast.kstore.KStore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.serialization.InternalSerializationApi
 import org.bxkr.octodiary.data.StorageLatest
 import org.bxkr.octodiary.data.exception.callbackfailure.CallbackHandlingFailureException
@@ -37,7 +33,6 @@ import org.bxkr.octodiary.domain.model.auth.TokenInfo
 import org.bxkr.octodiary.domain.repository.AuthRepository
 import org.koin.core.annotation.Single
 import org.koin.core.component.KoinComponent
-import kotlin.coroutines.coroutineContext
 
 @Single
 class AuthRepositoryImpl(
@@ -45,6 +40,15 @@ class AuthRepositoryImpl(
     private val kStore: KStore<StorageLatest>,
     private val deeplinkHolder: DeeplinkHolder
 ) : AuthRepository, KoinComponent {
+    override suspend fun normalizeAuthState() {
+        val storage = kStore.get()
+            ?: throw IllegalStateException("no default KStore found")
+
+        if (storage.callbackAuthState != null) {
+            kStore.update { it?.copy(callbackAuthState = null) }
+        }
+    }
+
     override fun getAuthStateFlow(): Flow<AuthState> = kStore.updates.map {
         it?.authState ?: AuthState.NotAuthorized
     }

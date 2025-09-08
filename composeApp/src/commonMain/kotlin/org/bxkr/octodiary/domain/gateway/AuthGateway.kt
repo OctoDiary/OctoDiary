@@ -1,7 +1,6 @@
 package org.bxkr.octodiary.domain.gateway
 
 import kotlinx.coroutines.flow.Flow
-import org.bxkr.octodiary.domain.model.Diary
 import org.bxkr.octodiary.domain.model.DiaryId
 import org.bxkr.octodiary.domain.model.auth.AuthMethod
 import org.bxkr.octodiary.domain.model.auth.AuthStepResult
@@ -14,7 +13,7 @@ interface AuthGateway {
 
     suspend fun processAuthStep(credentials: Credentials): AuthStepResult
 
-    suspend fun handleCallback(callbackLink: String, method: AuthMethod): Flow<CallbackState>
+    fun handleCallback(callbackLink: String, method: AuthMethod): Flow<CallbackState>
 
     fun checkToken(token: String): Flow<TokenInfo>
 }

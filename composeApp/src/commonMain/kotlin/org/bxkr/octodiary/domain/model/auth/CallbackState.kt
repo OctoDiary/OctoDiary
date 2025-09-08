@@ -5,8 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class CallbackState {
+    @Serializable
     @SerialName("initialized")
     data object Initialized : CallbackState()
+
+    @Serializable
     @SerialName("loading")
     data object Loading : CallbackState()
 }

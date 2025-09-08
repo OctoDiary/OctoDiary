@@ -8,7 +8,6 @@ import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import okio.ByteString.Companion.toByteString
 import org.bxkr.octodiary.data.StorageLatest
 import org.bxkr.octodiary.data.datasource.remote.MesMosRemoteDataSource
@@ -20,7 +19,6 @@ import org.bxkr.octodiary.data.exception.callbackfailure.InvalidLinkFormatError
 import org.bxkr.octodiary.data.model.api.mes.auth.IssueCallResponse
 import org.bxkr.octodiary.data.model.api.mes.profile.Profile
 import org.bxkr.octodiary.data.model.auth.MosRuInfo
-import org.bxkr.octodiary.data.model.auth.accesscredentials.MesMosAccessCredentials
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesPayload
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesToken
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.UchebnikPayload
@@ -31,6 +29,7 @@ import org.bxkr.octodiary.domain.ExternalIntegration
 import org.bxkr.octodiary.domain.gateway.AuthGateway
 import org.bxkr.octodiary.domain.model.DiaryId
 import org.bxkr.octodiary.domain.model.RegionCode
+import org.bxkr.octodiary.domain.model.auth.AccessCredentials
 import org.bxkr.octodiary.domain.model.auth.AuthGatewayStorage
 import org.bxkr.octodiary.domain.model.auth.AuthMethod
 import org.bxkr.octodiary.domain.model.auth.AuthMethodData
@@ -41,7 +40,6 @@ import org.bxkr.octodiary.domain.model.auth.Credentials
 import org.bxkr.octodiary.domain.model.auth.TokenInfo
 import org.bxkr.octodiary.domain.model.user.UserType
 import org.koin.core.annotation.Single
-import kotlin.coroutines.coroutineContext
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.time.ExperimentalTime
@@ -165,12 +163,12 @@ class MesMosAuthGateway(
         val mesToken = MesToken(accessToken)
         return if (mesToken.payload != null) {
             AuthStepResult.Success(
-                MesMosAccessCredentials(mesToken, null, null)
+                AccessCredentials.MesMosAccessCredentials(mesToken, null, null)
             )
         } else IllegalStateException("Invalid MES JWT token").toAuthStepFailure()
     }
 
-    override suspend fun handleCallback(
+    override fun handleCallback(
         callbackLink: String, method: AuthMethod
     ): Flow<CallbackState> = flow {
         emit(CallbackState.Loading)
@@ -179,7 +177,7 @@ class MesMosAuthGateway(
             AuthMethod.Telegram -> handleTelegramCallback(callbackLink)
             else -> throw CallbackHandlingFailureException(InvalidAuthMethodError())
         }
-    }.flowOn(coroutineContext)
+    }
 
     private suspend fun handleMosRuCallback(callbackLink: String) =
         try {
@@ -221,7 +219,7 @@ class MesMosAuthGateway(
         }
         kStore.update {
             it?.copy(
-                accessCredentials = MesMosAccessCredentials(
+                accessCredentials = AccessCredentials.MesMosAccessCredentials(
                     mesToken,
                     mosRuInfo,
                     tokenExchange.refreshToken
