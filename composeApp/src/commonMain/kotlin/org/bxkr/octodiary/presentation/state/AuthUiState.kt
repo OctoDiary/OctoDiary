@@ -1,12 +1,12 @@
 package org.bxkr.octodiary.presentation.state
 
 import kotlinx.coroutines.flow.StateFlow
-import org.bxkr.octodiary.domain.model.Diary
-import org.bxkr.octodiary.domain.model.Region
 import org.bxkr.octodiary.domain.model.auth.AuthMethod
 import org.bxkr.octodiary.domain.model.auth.AuthMethodData
 import org.bxkr.octodiary.domain.model.auth.AuthStepResult
 import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.domain.model.diary.Diary
+import org.bxkr.octodiary.domain.model.region.Region
 import org.bxkr.octodiary.domain.model.user.UserProfile
 import org.bxkr.octodiary.presentation.viewmodel.AuthViewModel
 
@@ -24,5 +24,4 @@ data class AuthUiState(
     val openLink: AuthMethodData.GoToUrl? = null,
     val additionalPageContent: AuthViewModel.AdditionalPageContent? = null,
     val tokenInfoFlow: StateFlow<TokenInfo>? = null
-
 )

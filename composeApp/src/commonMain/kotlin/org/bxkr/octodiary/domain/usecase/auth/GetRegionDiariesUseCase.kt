@@ -1,7 +1,7 @@
 package org.bxkr.octodiary.domain.usecase.auth
 
-import org.bxkr.octodiary.domain.model.Diary
-import org.bxkr.octodiary.domain.model.Region
+import org.bxkr.octodiary.domain.model.diary.Diary
+import org.bxkr.octodiary.domain.model.region.Region
 import org.bxkr.octodiary.domain.repository.AuthRepository
 import org.koin.core.annotation.Single
 

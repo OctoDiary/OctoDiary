@@ -45,4 +45,8 @@ sealed class AuthMethod {
             data object Uchebnik : TokenFormat()
         }
     }
+
+    @Serializable
+    @SerialName("demo")
+    data object Demo : AuthMethod()
 }

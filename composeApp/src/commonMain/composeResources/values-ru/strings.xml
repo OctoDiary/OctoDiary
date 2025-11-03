@@ -380,4 +380,9 @@
     <string name="server_error_not_authorized">Похоже, у МЭШ сбой или технические работы. Попробуй повторить запрос позже</string>
     <string name="network_error_description">Похоже, у тебя неполадки с интернетом, ты в другой стране или включил VPN. Так ничего работать не будет</string>
     <string name="internal_error_description">Произошла непредвиденная ошибка. Пожалуйста, сообщи об этом в поддержку</string>
+    <string name="unknown_diary_error">Неизвестная ошибка данных</string>
+    <string name="unsupported_feature_error">Эта функция недоступна для вашего дневника</string>
+    <string name="access_credentials_not_found">Данные доступа не найдены</string>
+    <string name="session_not_found">Сессия не найдена</string>
+    <string name="expired_access_credentials">Данные доступа просрочены</string>
 </resources>

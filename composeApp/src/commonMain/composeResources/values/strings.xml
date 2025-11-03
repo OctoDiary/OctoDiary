@@ -435,4 +435,9 @@
     <string name="loading_handle_code_title">Handling authorization code</string>
     <string name="loading_handle_code_step1">mos.ru authentication</string>
     <string name="loading_handle_code_step2">Obtaining MES token</string>
+    <string name="unknown_diary_error">Unknown data error</string>
+    <string name="unsupported_feature_error">This feature is not supported for your diary system</string>
+    <string name="access_credentials_not_found">No access credentials found</string>
+    <string name="session_not_found">No session found</string>
+    <string name="expired_access_credentials">Access credentials are expired</string>
 </resources>

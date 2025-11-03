@@ -3,7 +3,7 @@ package org.bxkr.octodiary.data.model.auth.accesscredentials.token
 import io.ktor.client.request.cookie
 import io.ktor.http.HttpMessageBuilder
 import kotlinx.serialization.Serializable
-import org.bxkr.octodiary.domain.model.RegionCode
+import org.bxkr.octodiary.domain.model.region.RegionCode
 
 @Serializable // getter-only props aren't serialized
 class MesToken(override val value: String) : JsonWebToken() {

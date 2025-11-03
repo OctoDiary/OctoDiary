@@ -12,10 +12,7 @@ import org.bxkr.octodiary.data.exception.callbackfailure.CallbackHandlingFailure
 import org.bxkr.octodiary.data.serialName
 import org.bxkr.octodiary.data.toAuthStepFailure
 import org.bxkr.octodiary.di.DeeplinkHolder
-import org.bxkr.octodiary.domain.model.Diary
-import org.bxkr.octodiary.domain.model.DiaryId
-import org.bxkr.octodiary.domain.model.Region
-import org.bxkr.octodiary.domain.model.RegionCode
+import org.bxkr.octodiary.di.annotation.MainStorage
 import org.bxkr.octodiary.domain.model.auth.AccessCredentials
 import org.bxkr.octodiary.domain.model.auth.AuthInfo
 import org.bxkr.octodiary.domain.model.auth.AuthMethod
@@ -30,6 +27,10 @@ import org.bxkr.octodiary.domain.model.auth.CallbackState
 import org.bxkr.octodiary.domain.model.auth.Credentials
 import org.bxkr.octodiary.domain.model.auth.LogoutResult
 import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.domain.model.diary.Diary
+import org.bxkr.octodiary.domain.model.diary.DiaryId
+import org.bxkr.octodiary.domain.model.region.Region
+import org.bxkr.octodiary.domain.model.region.RegionCode
 import org.bxkr.octodiary.domain.repository.AuthRepository
 import org.koin.core.annotation.Single
 import org.koin.core.component.KoinComponent
@@ -37,7 +38,7 @@ import org.koin.core.component.KoinComponent
 @Single
 class AuthRepositoryImpl(
     private val authInfo: AuthInfo,
-    private val kStore: KStore<StorageLatest>,
+    @param:MainStorage private val kStore: KStore<StorageLatest>,
     private val deeplinkHolder: DeeplinkHolder
 ) : AuthRepository, KoinComponent {
     override suspend fun normalizeAuthState() {
@@ -77,7 +78,10 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun logout(): LogoutResult {
-        TODO("Not yet implemented")
+        kStore.update {
+            it?.copy(accessCredentials = null)
+        }
+        return LogoutResult.Success
     }
 
     override suspend fun getRegionDiaries(region: Region): List<Diary> {
@@ -87,6 +91,8 @@ class AuthRepositoryImpl(
                     id = DiaryId.MesMos, name = "МЭШ", region
                 ), Diary(
                     id = DiaryId.SpoMos, name = "Колледж МЭШ", region
+                ), Diary(
+                    id = DiaryId.Demo, name = "Демо :)))", region
                 )
             )
 
@@ -123,6 +129,8 @@ class AuthRepositoryImpl(
                     AccessToken.TokenFormat.School, AccessToken.TokenFormat.Uchebnik
                 ))
             )
+
+            DiaryId.Demo -> listOf(AuthMethod.Demo)
 
             else -> emptyList()
         }

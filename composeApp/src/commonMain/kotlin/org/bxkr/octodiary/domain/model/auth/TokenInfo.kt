@@ -1,6 +1,5 @@
 package org.bxkr.octodiary.domain.model.auth
 
-import org.bxkr.octodiary.domain.model.DiaryId
 import org.bxkr.octodiary.domain.model.user.UserType
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant

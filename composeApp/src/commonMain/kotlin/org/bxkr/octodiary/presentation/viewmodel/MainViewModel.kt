@@ -3,10 +3,15 @@ package org.bxkr.octodiary.presentation.viewmodel
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.bxkr.octodiary.domain.model.diary.DiaryCapabilities
+import org.bxkr.octodiary.domain.repository.CapabilitiesProvider
+import org.bxkr.octodiary.domain.repository.SessionRepository
 import org.bxkr.octodiary.domain.usecase.auth.GetAuthStateFlowUseCase
 import org.bxkr.octodiary.domain.usecase.auth.NormalizeAppStateUseCase
 import org.bxkr.octodiary.domain.usecase.auth.StartCollectingDeeplinkUseCase
@@ -17,10 +22,21 @@ import org.koin.android.annotation.KoinViewModel
 class MainViewModel(
     private val getAuthStateFlowUseCase: GetAuthStateFlowUseCase,
     private val startCollectingDeeplinkUseCase: StartCollectingDeeplinkUseCase,
-    private val normalizeAppStateUseCase: NormalizeAppStateUseCase
+    private val normalizeAppStateUseCase: NormalizeAppStateUseCase,
+    private val capabilitiesProvider: CapabilitiesProvider,
+    sessionRepository: SessionRepository,
 ) : BaseViewModel<MainUiState>() {
     override val _uiState = MutableStateFlow(MainUiState())
-    val uiState = _uiState.asStateFlow()
+
+    val capabilities = sessionRepository.getSessionFlow().mapNotNull {
+        it?.diarySystemId?.let { diarySystemId ->
+            capabilitiesProvider.getCapabilities(diarySystemId)
+        }
+    }.stateIn(
+        viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = DiaryCapabilities()
+    )
 
     init {
         viewModelScope.launch {

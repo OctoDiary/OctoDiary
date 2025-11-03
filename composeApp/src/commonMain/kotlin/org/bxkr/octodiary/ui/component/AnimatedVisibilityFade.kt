@@ -24,3 +24,19 @@ fun AnimatedVisibilityFade(
         fadeOut(outSpec ?: spring(stiffness = Spring.StiffnessMediumLow))
     ) { content() }
 }
+
+@Composable
+fun <T> AnimatedVisibilityFadeNotNull(
+    target: T?,
+    modifier: Modifier = Modifier,
+    inSpec: FiniteAnimationSpec<Float>? = null,
+    outSpec: FiniteAnimationSpec<Float>? = null,
+    content: @Composable (target: T) -> Unit
+) {
+    AnimatedVisibility(
+        target != null,
+        modifier,
+        fadeIn(inSpec ?: spring(stiffness = Spring.StiffnessMediumLow)),
+        fadeOut(outSpec ?: spring(stiffness = Spring.StiffnessMediumLow))
+    ) { if (target != null) content(target) }
+}

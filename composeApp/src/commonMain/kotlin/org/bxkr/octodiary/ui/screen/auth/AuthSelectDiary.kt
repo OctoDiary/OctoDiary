@@ -1,8 +1,6 @@
 package org.bxkr.octodiary.ui.screen.auth
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -10,8 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,7 +31,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
@@ -73,12 +68,11 @@ import octodiary4.composeapp.generated.resources.ic_mes_myschool
 import octodiary4.composeapp.generated.resources.ic_mes_spo
 import octodiary4.composeapp.generated.resources.ic_myschool_gosuslugi
 import org.bxkr.octodiary.domain.ExternalIntegration
-import org.bxkr.octodiary.domain.model.DiaryId
-import org.bxkr.octodiary.domain.model.RegionCode
+import org.bxkr.octodiary.domain.model.diary.DiaryId
+import org.bxkr.octodiary.domain.model.region.RegionCode
 import org.bxkr.octodiary.presentation.viewmodel.AuthViewModel
 import org.bxkr.octodiary.presentation.viewmodel.MainViewModel
 import org.bxkr.octodiary.ui.component.AnimatedVisibilityFade
-import org.bxkr.octodiary.ui.component.auth.AuthBigButton
 import org.bxkr.octodiary.ui.theme.LocalIsDark
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -179,6 +173,7 @@ fun AuthSelectDiary(
                                     DiaryId.SpoMos -> Res.drawable.ic_mes_spo
                                     DiaryId.MesMosReg,
                                     DiaryId.MesKaluga -> Res.drawable.ic_mes_myschool
+                                    DiaryId.Demo -> Res.drawable.ic_mes_mos // TODO: Implement icon for demo diary
                                 }
                                 val borderColor by animateColorAsState(
                                     if (isSelected) MaterialTheme.colorScheme.secondary

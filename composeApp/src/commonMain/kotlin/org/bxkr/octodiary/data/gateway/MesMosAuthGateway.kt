@@ -25,10 +25,9 @@ import org.bxkr.octodiary.data.model.auth.accesscredentials.token.UchebnikPayloa
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.UchebnikToken
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.jwtPayloadTyped
 import org.bxkr.octodiary.data.toAuthStepFailure
+import org.bxkr.octodiary.di.annotation.MainStorage
 import org.bxkr.octodiary.domain.ExternalIntegration
 import org.bxkr.octodiary.domain.gateway.AuthGateway
-import org.bxkr.octodiary.domain.model.DiaryId
-import org.bxkr.octodiary.domain.model.RegionCode
 import org.bxkr.octodiary.domain.model.auth.AccessCredentials
 import org.bxkr.octodiary.domain.model.auth.AuthGatewayStorage
 import org.bxkr.octodiary.domain.model.auth.AuthMethod
@@ -38,6 +37,8 @@ import org.bxkr.octodiary.domain.model.auth.AuthStepResult
 import org.bxkr.octodiary.domain.model.auth.CallbackState
 import org.bxkr.octodiary.domain.model.auth.Credentials
 import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.domain.model.diary.DiaryId
+import org.bxkr.octodiary.domain.model.region.RegionCode
 import org.bxkr.octodiary.domain.model.user.UserType
 import org.koin.core.annotation.Single
 import kotlin.io.encoding.Base64
@@ -47,7 +48,7 @@ import kotlin.time.Instant
 
 @Single
 class MesMosAuthGateway(
-    private val kStore: KStore<StorageLatest>,
+    @param:MainStorage private val kStore: KStore<StorageLatest>,
     private val mesMosRemoteDataSource: MesMosRemoteDataSource
 ) : AuthGateway {
     override val responsibleFor: DiaryId
@@ -179,31 +180,28 @@ class MesMosAuthGateway(
         }
     }
 
-    private suspend fun handleMosRuCallback(callbackLink: String) =
-        try {
-            val url = URLBuilder(callbackLink)
-            if (
-                url.protocol.name != DeeplinkConstants.MOS_SCHEME
-                || url.host != DeeplinkConstants.MOS_HOST
-            ) throw CallbackHandlingFailureException(InvalidLinkFormatError())
-            val code = url.parameters[DeeplinkConstants.MOS_CODE_PARAMETER_NAME]
-                ?: throw CallbackHandlingFailureException(InvalidLinkFormatError())
-            val mosRuInfo = getGatewayStorage()?.mosRuInfo
-            if (mosRuInfo == null) throw CallbackHandlingFailureException(
-                AuthGatewayDataNotFoundError()
-            )
-            handleMosRuCode(code, mosRuInfo)
-        } catch (_: URLParserException) {
-            throw CallbackHandlingFailureException(InvalidLinkFormatError())
-        }
+    private suspend fun handleMosRuCallback(callbackLink: String) = try {
+        val url = URLBuilder(callbackLink)
+        if (url.protocol.name != DeeplinkConstants.MOS_SCHEME || url.host != DeeplinkConstants.MOS_HOST) throw CallbackHandlingFailureException(
+            InvalidLinkFormatError()
+        )
+        val code = url.parameters[DeeplinkConstants.MOS_CODE_PARAMETER_NAME]
+            ?: throw CallbackHandlingFailureException(InvalidLinkFormatError())
+        val mosRuInfo = getGatewayStorage()?.mosRuInfo
+        if (mosRuInfo == null) throw CallbackHandlingFailureException(
+            AuthGatewayDataNotFoundError()
+        )
+        handleMosRuCode(code, mosRuInfo)
+    } catch (_: URLParserException) {
+        throw CallbackHandlingFailureException(InvalidLinkFormatError())
+    }
 
     private suspend fun handleTelegramCallback(callbackLink: String) {
         TODO()
     }
 
     private suspend fun handleMosRuCode(
-        code: String,
-        mosRuInfo: MosRuInfo
+        code: String, mosRuInfo: MosRuInfo
     ) {
         val handleCodeResult = mesMosRemoteDataSource.handleCode(code, mosRuInfo)
         val tokenExchange = handleCodeResult.getOrElse {
@@ -220,9 +218,7 @@ class MesMosAuthGateway(
         kStore.update {
             it?.copy(
                 accessCredentials = AccessCredentials.MesMosAccessCredentials(
-                    mesToken,
-                    mosRuInfo,
-                    tokenExchange.refreshToken
+                    mesToken, mosRuInfo, tokenExchange.refreshToken
                 )
             )
         }
@@ -230,8 +226,8 @@ class MesMosAuthGateway(
 
     @OptIn(ExperimentalTime::class)
     override fun checkToken(token: String): Flow<TokenInfo> = flow<TokenInfo> {
-        val jwtPayload = token.jwtPayloadTyped<MesPayload>()
-            ?: token.jwtPayloadTyped<UchebnikPayload>()
+        val jwtPayload =
+            token.jwtPayloadTyped<MesPayload>() ?: token.jwtPayloadTyped<UchebnikPayload>()
         if (jwtPayload == null) return@flow emit(TokenInfo.Unsupported)
         if (jwtPayload is UchebnikPayload) {
             val uchebnikStandard = TokenInfo.Standard(
@@ -245,8 +241,7 @@ class MesMosAuthGateway(
             val mesToken = mesMosRemoteDataSource.toSchoolToken(UchebnikToken(token)).getOrElse {
                 return@flow emit(
                     uchebnikStandard.copy(
-                        furtherLoading = false,
-                        canLogIn = false
+                        furtherLoading = false, canLogIn = false
                     )
                 )
             }
@@ -257,7 +252,9 @@ class MesMosAuthGateway(
     }
 
     @OptIn(ExperimentalTime::class)
-    private suspend fun FlowCollector<TokenInfo>.checkMesToken(token: MesToken, originalDiaryName: String? = null) {
+    private suspend fun FlowCollector<TokenInfo>.checkMesToken(
+        token: MesToken, originalDiaryName: String? = null
+    ) {
         val standard = TokenInfo.Standard(
             furtherLoading = true,
             actualDiaryName = originalDiaryName ?: "МЭШ Москва",
@@ -267,27 +264,29 @@ class MesMosAuthGateway(
         )
         emit(standard)
         val profile = mesMosRemoteDataSource.getProfile(token).getOrElse {
-            return emit(standard.copy(
-                furtherLoading = false,
-                cannotLoadFurther = true,
-                canLogIn = false
-            ))
+            return emit(
+                standard.copy(
+                    furtherLoading = false, cannotLoadFurther = true, canLogIn = false
+                )
+            )
         }
-        val studentName = if (profile.profile.role == Profile.UserType.Student) profile.profile.fullName
-        else profile.children.firstOrNull()?.fullName
-        emit(TokenInfo.Extended(
-            standard.copy(
-                furtherLoading = false,
-                canLogIn = true
-            ),
-            userName = profile.profile.fullName,
-            studentName = studentName,
-            role = when (profile.profile.role) {
-                Profile.UserType.Student -> UserType.Student
-                Profile.UserType.Parent -> UserType.Parent
-                else -> null
-            },
-            schoolName = profile.children.firstOrNull()?.school?.name
-        ))
+        val studentName =
+            if (profile.profile.role == Profile.UserType.Student) profile.profile.fullName
+            else profile.children.firstOrNull()?.fullName
+        emit(
+            TokenInfo.Extended(
+                standard.copy(
+                    furtherLoading = false, canLogIn = true
+                ),
+                userName = profile.profile.fullName,
+                studentName = studentName,
+                role = when (profile.profile.role) {
+                    Profile.UserType.Student -> UserType.Student
+                    Profile.UserType.Parent -> UserType.Parent
+                    else -> null
+                },
+                schoolName = profile.children.firstOrNull()?.school?.name
+            )
+        )
     }
 }

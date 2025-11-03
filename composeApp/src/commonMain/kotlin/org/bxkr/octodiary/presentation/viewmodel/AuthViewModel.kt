@@ -1,23 +1,20 @@
 package org.bxkr.octodiary.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import org.bxkr.octodiary.AndroidPlatform
 import org.bxkr.octodiary.IOSPlatform
 import org.bxkr.octodiary.Platform
-import org.bxkr.octodiary.domain.model.Diary
-import org.bxkr.octodiary.domain.model.Region
 import org.bxkr.octodiary.domain.model.auth.AuthMethod
 import org.bxkr.octodiary.domain.model.auth.AuthMethodData
 import org.bxkr.octodiary.domain.model.auth.AuthStepResult
 import org.bxkr.octodiary.domain.model.auth.Credentials
 import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.domain.model.diary.Diary
+import org.bxkr.octodiary.domain.model.region.Region
 import org.bxkr.octodiary.domain.usecase.auth.CheckTokenUseCase
 import org.bxkr.octodiary.domain.usecase.auth.ExecuteAuthStepUseCase
 import org.bxkr.octodiary.domain.usecase.auth.FinishCallbackHandlingUseCase
@@ -36,7 +33,6 @@ class AuthViewModel(
     private val checkTokenUseCase: CheckTokenUseCase
 ) : BaseViewModel<AuthUiState>() {
     override val _uiState = MutableStateFlow(AuthUiState())
-    val uiState = _uiState.asStateFlow()
 
     fun goNext() = uu { it.copy(currentPage = it.currentPage + 1) }
     fun goBack() = uu {
@@ -119,6 +115,10 @@ class AuthViewModel(
                     onFree()
                 }
 
+                is AuthStepResult.Success -> {
+                    onFree()
+                }
+
                 else -> throw IllegalStateException("Credentials/AuthStepResult connection is broken")
             }
         }
@@ -159,7 +159,6 @@ class AuthViewModel(
                 currentPage = 3,
                 additionalPageContent = AdditionalPageContent.TokenPrompt
             ) }
-            println(_uiState.value.currentPage)
             onFree()
         }
     }

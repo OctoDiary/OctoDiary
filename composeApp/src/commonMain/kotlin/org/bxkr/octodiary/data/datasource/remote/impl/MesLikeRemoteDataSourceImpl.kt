@@ -4,7 +4,7 @@ import org.bxkr.octodiary.data.datasource.remote.MesLikeRemoteDataSource
 import org.bxkr.octodiary.data.model.api.mes.profile.ProfileResponse
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesToken
 import org.bxkr.octodiary.data.model.auth.accesscredentials.token.UchebnikToken
-import org.bxkr.octodiary.domain.model.DiaryId
+import org.bxkr.octodiary.domain.model.diary.DiaryId
 import org.bxkr.octodiary.network.SchoolMesApiService
 import org.bxkr.octodiary.network.UchebnikApiService
 import org.bxkr.octodiary.network.config.SchoolMesApiConfig

@@ -62,6 +62,9 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.graphics.core)
+            implementation(libs.androidx.graphics.path)
+            implementation(libs.androidx.graphics.shapes)
             implementation(libs.m3)
 
             // Ktor

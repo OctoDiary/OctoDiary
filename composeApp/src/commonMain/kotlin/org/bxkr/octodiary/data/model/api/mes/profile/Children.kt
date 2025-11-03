@@ -33,7 +33,7 @@ data class Children(
     @SerialName("last_name")
     val lastName: String,
     @SerialName("middle_name")
-    val middleName: String,
+    val middleName: String?,
 //    @SerialName("parallel_curriculum_id")
 //    val parallelCurriculumId: Any,
 //    @SerialName("phone")

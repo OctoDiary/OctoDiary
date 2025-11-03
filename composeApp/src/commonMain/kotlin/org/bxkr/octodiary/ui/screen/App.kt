@@ -16,7 +16,7 @@ import org.bxkr.octodiary.ui.component.AnimatedVisibilityFade
 import org.bxkr.octodiary.ui.component.DebugMenu
 import org.bxkr.octodiary.ui.screen.auth.AuthScreen
 import org.bxkr.octodiary.ui.screen.auth.CallbackScreen
-import org.bxkr.octodiary.ui.screen.nav.NavScreen
+import org.bxkr.octodiary.ui.screen.diary.NavScreen
 import org.bxkr.octodiary.ui.theme.OctoDiaryTheme
 import org.koin.compose.viewmodel.koinViewModel
 
