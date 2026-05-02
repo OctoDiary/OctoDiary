@@ -1,6 +1,7 @@
 package org.bxkr.octodiary.domain.model.cache
 
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateRange
 import kotlinx.serialization.Serializable
 import org.bxkr.octodiary.domain.model.event.Event
 import org.bxkr.octodiary.domain.model.homework.HomeworkEntry
@@ -19,14 +20,18 @@ sealed class CacheStorage {
     @Serializable
     data class ScheduleStorage(
         val schedule: List<Event>,
-        val dateRange: Pair<LocalDate, LocalDate>,
+        val dateRangePair: Pair<LocalDate, LocalDate>,
         override val cachedAt: Long
-    ) : CacheStorage()
+    ) : CacheStorage() {
+        val dateRange get() = dateRangePair.run { LocalDateRange(first, second) }
+    }
 
     @Serializable
     data class HomeworkEntriesStorage(
         val homeworkEntries: List<HomeworkEntry>,
-        val dateRange: Pair<LocalDate, LocalDate>,
+        val dateRangePair: Pair<LocalDate, LocalDate>,
         override val cachedAt: Long
-    ) : CacheStorage()
+    ) : CacheStorage() {
+        val dateRange get() = dateRangePair.run { LocalDateRange(first, second) }
+    }
 }

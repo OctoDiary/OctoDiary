@@ -8,18 +8,11 @@ import kotlinx.coroutines.launch
 import org.bxkr.octodiary.AndroidPlatform
 import org.bxkr.octodiary.IOSPlatform
 import org.bxkr.octodiary.Platform
-import org.bxkr.octodiary.domain.model.auth.AuthMethod
-import org.bxkr.octodiary.domain.model.auth.AuthMethodData
-import org.bxkr.octodiary.domain.model.auth.AuthStepResult
-import org.bxkr.octodiary.domain.model.auth.Credentials
-import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.di.DeeplinkHolder
+import org.bxkr.octodiary.domain.model.auth.*
 import org.bxkr.octodiary.domain.model.diary.Diary
 import org.bxkr.octodiary.domain.model.region.Region
-import org.bxkr.octodiary.domain.usecase.auth.CheckTokenUseCase
-import org.bxkr.octodiary.domain.usecase.auth.ExecuteAuthStepUseCase
-import org.bxkr.octodiary.domain.usecase.auth.FinishCallbackHandlingUseCase
-import org.bxkr.octodiary.domain.usecase.auth.GetAuthMethodsUseCase
-import org.bxkr.octodiary.domain.usecase.auth.GetRegionDiariesUseCase
+import org.bxkr.octodiary.domain.usecase.auth.*
 import org.bxkr.octodiary.network.exception.FailedConnectionException
 import org.bxkr.octodiary.presentation.state.AuthUiState
 import org.koin.android.annotation.KoinViewModel
@@ -30,9 +23,12 @@ class AuthViewModel(
     private val getAuthMethodsUseCase: GetAuthMethodsUseCase,
     private val getRegionDiariesUseCase: GetRegionDiariesUseCase,
     private val finishCallbackHandlingUseCase: FinishCallbackHandlingUseCase,
-    private val checkTokenUseCase: CheckTokenUseCase
+    private val checkTokenUseCase: CheckTokenUseCase,
+    private val deeplinkHolder: DeeplinkHolder
 ) : BaseViewModel<AuthUiState>() {
     override val _uiState = MutableStateFlow(AuthUiState())
+
+    fun resetUiState() = uu { AuthUiState() }
 
     fun goNext() = uu { it.copy(currentPage = it.currentPage + 1) }
     fun goBack() = uu {
@@ -138,6 +134,8 @@ class AuthViewModel(
 
     sealed class AdditionalPageContent {
         data object TokenPrompt : AdditionalPageContent()
+
+        data class WebView(val url: String, val webViewListener: (String) -> Boolean) : AdditionalPageContent()
     }
 
     private fun getErrorDescription(failure: AuthStepResult.Failure): ErrorDescription =
@@ -170,8 +168,7 @@ class AuthViewModel(
     }
 
     fun checkToken(token: String) {
-        val diaryId = _uiState.value.selectedDiary?.id
-        if (diaryId == null) return
+        val diaryId = _uiState.value.selectedDiary?.id ?: return
         uu {
             it.copy(
                 tokenInfoFlow =
@@ -181,4 +178,20 @@ class AuthViewModel(
             )
         }
     }
+
+    fun openWebViewPage(goToUrl: AuthMethodData.GoToUrl) {
+        viewModelScope.launch {
+            uu {
+                it.copy(
+                    currentPage = 3,
+                    additionalPageContent = AdditionalPageContent.WebView(
+                        goToUrl.url,
+                        goToUrl.webViewListener ?: throw IllegalStateException("No web view listener passed")
+                    )
+                )
+            }
+        }
+    }
+
+    fun catchWebViewUrl(url: String) = deeplinkHolder.updateDeeplink(url)
 }

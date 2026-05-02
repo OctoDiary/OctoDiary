@@ -10,30 +10,16 @@ import androidx.compose.material.icons.automirrored.rounded.TrendingUp
 import androidx.compose.material.icons.rounded.Dashboard
 import androidx.compose.material.icons.rounded.HomeWork
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import octodiary4.composeapp.generated.resources.Res
-import octodiary4.composeapp.generated.resources.app_name
-import octodiary4.composeapp.generated.resources.dashboard
-import octodiary4.composeapp.generated.resources.diary
-import octodiary4.composeapp.generated.resources.homeworks
-import octodiary4.composeapp.generated.resources.marks
-import octodiary4.composeapp.generated.resources.profile
+import octodiary4.composeapp.generated.resources.*
+import org.bxkr.octodiary.domain.model.auth.AuthState
+import org.bxkr.octodiary.presentation.viewmodel.MainViewModel
 import org.bxkr.octodiary.presentation.viewmodel.NavViewModel
 import org.bxkr.octodiary.ui.component.AnimatedVisibilityFade
 import org.bxkr.octodiary.ui.screen.diary.home.HomeScreen
@@ -56,9 +42,17 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun NavScreen(
-    navViewModel: NavViewModel = koinViewModel()
+    navViewModel: NavViewModel = koinViewModel(),
+    mainViewModel: MainViewModel = koinViewModel()
 ) {
     val uiState by navViewModel.uiState.collectAsState()
+    val mainUiState by mainViewModel.uiState.collectAsState()
+
+    LaunchedEffect(mainUiState.authState) {
+        if (mainUiState.authState == AuthState.Authorized) {
+            navViewModel.resetUiState()
+        }
+    }
 
     Box(Modifier.fillMaxSize()) {
         Navigation(navViewModel)

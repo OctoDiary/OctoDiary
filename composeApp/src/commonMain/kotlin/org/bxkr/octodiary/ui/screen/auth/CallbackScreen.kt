@@ -1,33 +1,12 @@
 package org.bxkr.octodiary.ui.screen.auth
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LoadingIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
@@ -90,9 +69,9 @@ fun CallbackScreen(
                     }
                 }
             ) { paddingValues ->
-                Surface {
+                Surface(Modifier.padding(paddingValues)) {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Column {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             LoadingIndicator()
                             Spacer(Modifier.height(16.dp))
                             Text(
@@ -125,7 +104,7 @@ fun CallbackScreen(
                 }
             ) { paddingValues ->
                 Surface {
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Box(Modifier.padding(paddingValues).fillMaxSize(), contentAlignment = Alignment.Center) {
                         Column {
                             Icon(
                                 Icons.Rounded.Warning,

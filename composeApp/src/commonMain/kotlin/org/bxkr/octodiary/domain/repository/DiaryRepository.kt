@@ -1,6 +1,7 @@
 package org.bxkr.octodiary.domain.repository
 
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateRange
 import org.bxkr.octodiary.domain.model.diary.DiaryId
 import org.bxkr.octodiary.domain.model.event.Event
 import org.bxkr.octodiary.domain.model.group.Group
@@ -13,10 +14,9 @@ import org.bxkr.octodiary.domain.model.visits.VisitDay
 interface DiaryRepository {
     val responsibleFor: DiaryId
     suspend fun getProfile(): Result<UserProfile>
-    suspend fun getSchedule(date: LocalDate): Result<List<Event>>
+    suspend fun getSchedule(dateRange: LocalDateRange): Result<List<Event>>
     suspend fun getHomeworkEntries(
-        dateStart: LocalDate,
-        dateEnd: LocalDate
+        dateRange: LocalDateRange
     ): Result<List<HomeworkEntry>>
 
     suspend fun getOrganization(): Result<Organization>

@@ -2,23 +2,33 @@ package org.bxkr.octodiary.ui.screen.auth
 
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalUriHandler
+import org.bxkr.octodiary.domain.model.auth.AuthState
 import org.bxkr.octodiary.presentation.viewmodel.AuthViewModel
+import org.bxkr.octodiary.presentation.viewmodel.MainViewModel
 import org.bxkr.octodiary.ui.component.ErrorDialog
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AuthScreen() {
+fun AuthScreen(
+    mainViewModel: MainViewModel = koinViewModel()
+) {
     val viewModel: AuthViewModel = koinViewModel()
+    val mainUiState by mainViewModel.uiState.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
     val uriHandler = LocalUriHandler.current
 
     val pagerState = rememberPagerState { 4 }
+
+    LaunchedEffect(mainUiState.authState) {
+        if (mainUiState.authState == AuthState.NotAuthorized) {
+            viewModel.resetUiState()
+        }
+    }
 
     LaunchedEffect(uiState.currentPage) {
         pagerState.animateScrollToPage(uiState.currentPage)
@@ -28,7 +38,8 @@ fun AuthScreen() {
         if (uiState.openLink != null) {
             if (uiState.openLink?.isWebView == false)
                 uiState.openLink?.url?.let { uriHandler.openUri(it) }
-            else TODO()
+            else if (uiState.openLink?.isWebView == true)
+                uiState.openLink?.let { viewModel.openWebViewPage(it) }
         }
     }
 

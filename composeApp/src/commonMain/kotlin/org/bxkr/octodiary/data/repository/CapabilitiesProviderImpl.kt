@@ -12,17 +12,22 @@ class CapabilitiesProviderImpl : CapabilitiesProvider {
     private val demoCapabilities = DiaryCapabilities(
         hasVisits = true,
         hasMeals = true,
-        lessonAttendance = true
+        canAddEvents = true,
+        hasGifts = true,
+        hasGovExams = true
     )
 
     private val mesMosCapabilities = DiaryCapabilities(
         hasVisits = true,
         hasMeals = true,
-        lessonAttendance = true
+        canAddEvents = true,
+        hasGifts = true,
+        hasGovExams = true,
+        isMultipleDatesEventLoadingJustified = true
     )
 
     private val mesRegionalCapabilities = DiaryCapabilities(
-        lessonAttendance = true
+        isMultipleDatesEventLoadingJustified = true
     )
 
 

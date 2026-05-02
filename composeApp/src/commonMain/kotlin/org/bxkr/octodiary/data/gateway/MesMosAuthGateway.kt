@@ -1,42 +1,24 @@
 package org.bxkr.octodiary.data.gateway
 
 import io.github.xxfast.kstore.KStore
-import io.ktor.http.URLBuilder
-import io.ktor.http.URLParserException
-import io.ktor.http.Url
-import io.ktor.utils.io.core.toByteArray
+import io.ktor.http.*
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import okio.ByteString.Companion.toByteString
 import org.bxkr.octodiary.data.StorageLatest
 import org.bxkr.octodiary.data.datasource.remote.MesMosRemoteDataSource
-import org.bxkr.octodiary.data.exception.callbackfailure.AuthGatewayDataNotFoundError
-import org.bxkr.octodiary.data.exception.callbackfailure.CallbackHandlingFailureException
-import org.bxkr.octodiary.data.exception.callbackfailure.CodeHandlingError
-import org.bxkr.octodiary.data.exception.callbackfailure.InvalidAuthMethodError
-import org.bxkr.octodiary.data.exception.callbackfailure.InvalidLinkFormatError
+import org.bxkr.octodiary.data.exception.callbackfailure.*
 import org.bxkr.octodiary.data.model.api.mes.auth.IssueCallResponse
 import org.bxkr.octodiary.data.model.api.mes.profile.Profile
 import org.bxkr.octodiary.data.model.auth.MosRuInfo
-import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesPayload
-import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesToken
-import org.bxkr.octodiary.data.model.auth.accesscredentials.token.UchebnikPayload
-import org.bxkr.octodiary.data.model.auth.accesscredentials.token.UchebnikToken
-import org.bxkr.octodiary.data.model.auth.accesscredentials.token.jwtPayloadTyped
+import org.bxkr.octodiary.data.model.auth.accesscredentials.token.*
 import org.bxkr.octodiary.data.toAuthStepFailure
 import org.bxkr.octodiary.di.annotation.MainStorage
 import org.bxkr.octodiary.domain.ExternalIntegration
 import org.bxkr.octodiary.domain.gateway.AuthGateway
-import org.bxkr.octodiary.domain.model.auth.AccessCredentials
-import org.bxkr.octodiary.domain.model.auth.AuthGatewayStorage
-import org.bxkr.octodiary.domain.model.auth.AuthMethod
-import org.bxkr.octodiary.domain.model.auth.AuthMethodData
-import org.bxkr.octodiary.domain.model.auth.AuthState
-import org.bxkr.octodiary.domain.model.auth.AuthStepResult
-import org.bxkr.octodiary.domain.model.auth.CallbackState
-import org.bxkr.octodiary.domain.model.auth.Credentials
-import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.domain.model.auth.*
 import org.bxkr.octodiary.domain.model.diary.DiaryId
 import org.bxkr.octodiary.domain.model.region.RegionCode
 import org.bxkr.octodiary.domain.model.user.UserType
@@ -139,9 +121,9 @@ class MesMosAuthGateway(
                     mosRuInfo = MosRuInfo(
                         credentials.clientId, credentials.clientSecret, codeVerifier
                     )
-                ), callbackAuthState = if (isInBrowser) AuthState.Callback.WaitingForCallback(
+                ), callbackAuthState = AuthState.Callback.WaitingForCallback(
                     method, DiaryId.MesMos
-                ) else null
+                )
             )
         }
 
@@ -187,8 +169,7 @@ class MesMosAuthGateway(
         )
         val code = url.parameters[DeeplinkConstants.MOS_CODE_PARAMETER_NAME]
             ?: throw CallbackHandlingFailureException(InvalidLinkFormatError())
-        val mosRuInfo = getGatewayStorage()?.mosRuInfo
-        if (mosRuInfo == null) throw CallbackHandlingFailureException(
+        val mosRuInfo = getGatewayStorage()?.mosRuInfo ?: throw CallbackHandlingFailureException(
             AuthGatewayDataNotFoundError()
         )
         handleMosRuCode(code, mosRuInfo)

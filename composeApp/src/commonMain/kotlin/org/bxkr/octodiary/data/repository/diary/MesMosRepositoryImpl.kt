@@ -8,6 +8,7 @@ import org.bxkr.octodiary.domain.model.auth.AccessCredentials
 import org.bxkr.octodiary.domain.model.diary.DiaryId
 import org.bxkr.octodiary.domain.model.visits.VisitDay
 import org.bxkr.octodiary.domain.repository.DiaryRepository
+import org.bxkr.octodiary.domain.repository.Logger
 import org.bxkr.octodiary.domain.repository.SessionRepository
 import org.koin.core.annotation.Single
 
@@ -15,9 +16,10 @@ import org.koin.core.annotation.Single
 class MesMosRepositoryImpl(
     private val mesMosRemoteDataSource: MesMosRemoteDataSource,
     private val sessionRepository: SessionRepository,
-    private val cacheLocalDataSource: CacheLocalDataSource
+    private val cacheLocalDataSource: CacheLocalDataSource,
+    private val logger: Logger
 ) : DiaryRepository, MesLikeRepositoryImpl(
-    mesMosRemoteDataSource, sessionRepository, cacheLocalDataSource
+    mesMosRemoteDataSource, sessionRepository, cacheLocalDataSource, logger
 ) {
     override val responsibleFor = DiaryId.MesMos
 

@@ -1,10 +1,9 @@
 package org.bxkr.octodiary.ui.component
 
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DebugMenu(onDismiss: () -> Unit) {
     AlertDialog(
@@ -14,6 +13,14 @@ fun DebugMenu(onDismiss: () -> Unit) {
                 Text("Закрыть")
             }
         },
-        title = { Text("Меню отладки") }
+        title = { Text("Меню отладки") },
+        text = {
+            Button({
+                onDismiss()
+
+            }) {
+                Text("Войти на другой сервер")
+            }
+        }
     )
 }

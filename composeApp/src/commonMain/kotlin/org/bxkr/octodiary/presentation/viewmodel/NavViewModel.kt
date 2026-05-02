@@ -15,6 +15,8 @@ class NavViewModel : BaseViewModel<NavUiState>() {
     private val _navigationEvents = MutableSharedFlow<NavDestination>()
     val navigationEvents = _navigationEvents.asSharedFlow()
 
+    fun resetUiState() = uu { NavUiState() }
+
     fun openSettings() = uu { it.copy(isSettingsPageOpened = true) }
 
     fun closeSettings() = uu { it.copy(isSettingsPageOpened = false) }

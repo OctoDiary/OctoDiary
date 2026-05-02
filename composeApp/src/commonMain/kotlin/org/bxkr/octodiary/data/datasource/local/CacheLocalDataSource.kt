@@ -1,6 +1,6 @@
 package org.bxkr.octodiary.data.datasource.local
 
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateRange
 import org.bxkr.octodiary.domain.model.cache.CacheStorage
 import org.bxkr.octodiary.domain.model.event.Event
 import org.bxkr.octodiary.domain.model.homework.HomeworkEntry
@@ -15,14 +15,14 @@ interface CacheLocalDataSource {
     suspend fun getSchedule(): CacheStorage.ScheduleStorage?
     suspend fun saveSchedule(
         schedule: List<Event>,
-        dateRange: Pair<LocalDate, LocalDate>,
+        dateRange: LocalDateRange,
         loadedAt: Long
     )
 
     suspend fun getHomeworkEntries(): CacheStorage.HomeworkEntriesStorage?
     suspend fun saveHomeworkEntries(
         homeworkEntries: List<HomeworkEntry>,
-        dateRange: Pair<LocalDate, LocalDate>,
+        dateRange: LocalDateRange,
         loadedAt: Long
     )
 }

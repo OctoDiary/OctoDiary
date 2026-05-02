@@ -7,13 +7,15 @@ import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesToken
 import org.bxkr.octodiary.domain.exception.diary.UnsupportedFeatureException
 import org.bxkr.octodiary.domain.model.auth.AccessCredentials
 import org.bxkr.octodiary.domain.model.visits.VisitDay
+import org.bxkr.octodiary.domain.repository.Logger
 import org.bxkr.octodiary.domain.repository.SessionRepository
 
 abstract class MesRegionalRepositoryImpl(
     private val mesMosRegRemoteDataSource: MesMosRegRemoteDataSource,
     private val sessionRepository: SessionRepository,
-    private val cacheLocalDataSource: CacheLocalDataSource
-) : MesLikeRepositoryImpl(mesMosRegRemoteDataSource, sessionRepository, cacheLocalDataSource) {
+    private val cacheLocalDataSource: CacheLocalDataSource,
+    private val logger: Logger,
+) : MesLikeRepositoryImpl(mesMosRegRemoteDataSource, sessionRepository, cacheLocalDataSource, logger) {
 
     final override suspend fun getAccessToken(): MesToken? =
         (sessionRepository.getCurrentSession()?.accessCredentials as? AccessCredentials.MesRegionalAccessCredentials)?.accessToken

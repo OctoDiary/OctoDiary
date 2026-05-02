@@ -1,11 +1,7 @@
 package org.bxkr.octodiary.data.repository
 
 import io.github.xxfast.kstore.KStore
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.serialization.InternalSerializationApi
 import org.bxkr.octodiary.data.StorageLatest
 import org.bxkr.octodiary.data.exception.callbackfailure.CallbackHandlingFailureException
@@ -13,20 +9,8 @@ import org.bxkr.octodiary.data.serialName
 import org.bxkr.octodiary.data.toAuthStepFailure
 import org.bxkr.octodiary.di.DeeplinkHolder
 import org.bxkr.octodiary.di.annotation.MainStorage
-import org.bxkr.octodiary.domain.model.auth.AccessCredentials
-import org.bxkr.octodiary.domain.model.auth.AuthInfo
-import org.bxkr.octodiary.domain.model.auth.AuthMethod
-import org.bxkr.octodiary.domain.model.auth.AuthMethod.AccessToken
-import org.bxkr.octodiary.domain.model.auth.AuthMethod.InBrowser
-import org.bxkr.octodiary.domain.model.auth.AuthMethod.LoginPassword
-import org.bxkr.octodiary.domain.model.auth.AuthMethod.Telegram
-import org.bxkr.octodiary.domain.model.auth.AuthMethod.WebView
-import org.bxkr.octodiary.domain.model.auth.AuthState
-import org.bxkr.octodiary.domain.model.auth.AuthStepResult
-import org.bxkr.octodiary.domain.model.auth.CallbackState
-import org.bxkr.octodiary.domain.model.auth.Credentials
-import org.bxkr.octodiary.domain.model.auth.LogoutResult
-import org.bxkr.octodiary.domain.model.auth.TokenInfo
+import org.bxkr.octodiary.domain.model.auth.*
+import org.bxkr.octodiary.domain.model.auth.AuthMethod.*
 import org.bxkr.octodiary.domain.model.diary.Diary
 import org.bxkr.octodiary.domain.model.diary.DiaryId
 import org.bxkr.octodiary.domain.model.region.Region
@@ -91,8 +75,6 @@ class AuthRepositoryImpl(
                     id = DiaryId.MesMos, name = "МЭШ", region
                 ), Diary(
                     id = DiaryId.SpoMos, name = "Колледж МЭШ", region
-                ), Diary(
-                    id = DiaryId.Demo, name = "Демо :)))", region
                 )
             )
 
@@ -105,6 +87,12 @@ class AuthRepositoryImpl(
             RegionCode.Kaluga.code -> listOf(
                 Diary(
                     id = DiaryId.MesKaluga, name = "Моя школа", region
+                )
+            )
+
+            RegionCode.Tatarstan.code -> listOf(
+                Diary(
+                    id = DiaryId.MesTatarstan, name = "Моя Школа", region
                 )
             )
 
@@ -130,7 +118,15 @@ class AuthRepositoryImpl(
                 ))
             )
 
-            DiaryId.Demo -> listOf(AuthMethod.Demo)
+            DiaryId.MesTatarstan -> listOf(
+                InBrowser.Esia, WebView.Esia, AccessToken(
+                    listOf(
+                        AccessToken.TokenFormat.School
+                    )
+                )
+            )
+
+            DiaryId.Demo -> listOf(Demo)
 
             else -> emptyList()
         }

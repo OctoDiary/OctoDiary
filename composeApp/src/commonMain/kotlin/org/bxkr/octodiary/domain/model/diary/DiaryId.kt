@@ -19,4 +19,7 @@ enum class DiaryId {
 
     @SerialName("kaluga_myschool")
     MesKaluga,
+
+    @SerialName("tatarstan_myschool")
+    MesTatarstan
 }
