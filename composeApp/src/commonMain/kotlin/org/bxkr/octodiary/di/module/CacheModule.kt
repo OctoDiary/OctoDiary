@@ -10,26 +10,27 @@ import org.bxkr.octodiary.domain.model.cache.CacheStorage
 import org.bxkr.octodiary.getPaths
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
+import org.koin.core.scope.Scope
 
 @Module
 class CacheModule {
-    private fun getPath(id: CacheId) = Path("${getPaths().files}/cache_${id.storeKey}")
+    private fun getPath(id: CacheId, scope: Scope) = Path("${getPaths(scope).files}/cache_${id.storeKey}")
 
     @Single
     @ProfileCache
-    fun profileStorage() = storeOf<CacheStorage.ProfileStorage>(
-        getPath(CacheId.Profile)
+    fun profileStorage(scope: Scope) = storeOf<CacheStorage.ProfileStorage>(
+        getPath(CacheId.Profile, scope)
     )
 
     @Single
     @ScheduleCache
-    fun scheduleStorage() = storeOf<CacheStorage.ScheduleStorage>(
-        getPath(CacheId.Schedule)
+    fun scheduleStorage(scope: Scope) = storeOf<CacheStorage.ScheduleStorage>(
+        getPath(CacheId.Schedule, scope)
     )
 
     @Single
     @HomeworkEntriesCache
-    fun homeworkEntriesStorage() = storeOf<CacheStorage.HomeworkEntriesStorage>(
-        getPath(CacheId.HomeworkEntries)
+    fun homeworkEntriesStorage(scope: Scope) = storeOf<CacheStorage.HomeworkEntriesStorage>(
+        getPath(CacheId.HomeworkEntries, scope)
     )
 }

@@ -18,8 +18,9 @@ sealed class AccessCredentials(
     ) : AccessCredentials(responsibleFor = DiaryId.MesMos)
 
     @Serializable
-    data class MesRegionalAccessCredentials(
-        val accessToken: MesToken
+    data class MesMosRegAccessCredentials(
+        val accessToken: MesToken,
+        val authEduRefreshToken: String
     ) : AccessCredentials(responsibleFor = DiaryId.MesMosReg)
 
     @Serializable

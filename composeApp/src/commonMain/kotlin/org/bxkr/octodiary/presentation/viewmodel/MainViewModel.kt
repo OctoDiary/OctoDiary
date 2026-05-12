@@ -2,12 +2,7 @@ package org.bxkr.octodiary.presentation.viewmodel
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.bxkr.octodiary.domain.model.diary.DiaryCapabilities
 import org.bxkr.octodiary.domain.repository.CapabilitiesProvider
@@ -16,7 +11,7 @@ import org.bxkr.octodiary.domain.usecase.auth.GetAuthStateFlowUseCase
 import org.bxkr.octodiary.domain.usecase.auth.NormalizeAppStateUseCase
 import org.bxkr.octodiary.domain.usecase.auth.StartCollectingDeeplinkUseCase
 import org.bxkr.octodiary.presentation.state.MainUiState
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
 class MainViewModel(

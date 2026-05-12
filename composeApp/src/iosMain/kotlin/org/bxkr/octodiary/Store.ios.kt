@@ -2,13 +2,14 @@ package org.bxkr.octodiary
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.io.files.Path
+import org.koin.core.scope.Scope
 import platform.Foundation.NSCachesDirectory
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
 @OptIn(ExperimentalForeignApi::class)
-actual fun getPaths(): Paths {
+actual fun getPaths(scope: Scope): Paths {
     val fileManager: NSFileManager = NSFileManager.defaultManager
     val documentsUrl = fileManager.URLForDirectory(
         directory = NSDocumentDirectory,

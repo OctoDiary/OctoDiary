@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class School(
     @SerialName("county")
-    val county: String,
+    val county: String?,
     @SerialName("global_school_id")
     val globalSchoolId: Int,
     @SerialName("id")
@@ -17,9 +17,9 @@ data class School(
     @SerialName("name")
     val name: String,
     @SerialName("phone")
-    val phone: String,
+    val phone: String?,
     @SerialName("principal")
-    val principal: String,
+    val principal: String?,
     @SerialName("short_name")
     val shortName: String
 )

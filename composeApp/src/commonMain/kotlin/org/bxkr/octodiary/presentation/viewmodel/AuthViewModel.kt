@@ -15,7 +15,7 @@ import org.bxkr.octodiary.domain.model.region.Region
 import org.bxkr.octodiary.domain.usecase.auth.*
 import org.bxkr.octodiary.network.exception.FailedConnectionException
 import org.bxkr.octodiary.presentation.state.AuthUiState
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
 class AuthViewModel(

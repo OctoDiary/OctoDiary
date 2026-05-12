@@ -6,11 +6,13 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.bxkr.octodiary.domain.model.auth.AuthState
+import org.bxkr.octodiary.presentation.viewmodel.AuthViewModel
 import org.bxkr.octodiary.presentation.viewmodel.MainViewModel
 import org.bxkr.octodiary.ui.component.AnimatedVisibilityFade
 import org.bxkr.octodiary.ui.component.DebugMenu
@@ -24,7 +26,14 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun App() {
     val mainViewModel: MainViewModel = koinViewModel()
+    val authViewModel: AuthViewModel = koinViewModel()
     val uiState by mainViewModel.uiState.collectAsState()
+
+    LaunchedEffect(uiState.authState) {
+        if (uiState.authState is AuthState.Authorized) {
+            authViewModel.resetUiState()
+        }
+    }
 
     OctoDiaryTheme {
         Surface {

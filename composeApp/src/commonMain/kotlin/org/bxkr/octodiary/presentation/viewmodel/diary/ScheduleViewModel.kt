@@ -12,7 +12,7 @@ import org.bxkr.octodiary.domain.usecase.diary.GetCapabilitiesUseCase
 import org.bxkr.octodiary.domain.usecase.diary.GetScheduleUseCase
 import org.bxkr.octodiary.presentation.state.diary.ScheduleUiState
 import org.bxkr.octodiary.presentation.viewmodel.BaseViewModel
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

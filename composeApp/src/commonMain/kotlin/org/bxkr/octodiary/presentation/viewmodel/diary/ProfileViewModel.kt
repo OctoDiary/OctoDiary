@@ -10,7 +10,7 @@ import org.bxkr.octodiary.domain.repository.Logger
 import org.bxkr.octodiary.domain.usecase.diary.GetProfileUseCase
 import org.bxkr.octodiary.presentation.state.diary.ProfileUiState
 import org.bxkr.octodiary.presentation.viewmodel.BaseViewModel
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
 class ProfileViewModel(

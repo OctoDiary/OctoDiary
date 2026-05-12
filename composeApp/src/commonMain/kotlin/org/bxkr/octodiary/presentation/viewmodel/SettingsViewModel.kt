@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.bxkr.octodiary.domain.usecase.auth.LogoutUseCase
 import org.bxkr.octodiary.presentation.state.SettingsUiState
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
 class SettingsViewModel(

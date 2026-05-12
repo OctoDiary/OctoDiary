@@ -1,7 +1,9 @@
 package org.bxkr.octodiary.data.repository.diary
 
 import org.bxkr.octodiary.data.datasource.local.CacheLocalDataSource
-import org.bxkr.octodiary.data.datasource.remote.impl.MesMosRegRemoteDataSource
+import org.bxkr.octodiary.data.datasource.remote.MesMosRegRemoteDataSource
+import org.bxkr.octodiary.data.model.auth.accesscredentials.token.MesToken
+import org.bxkr.octodiary.domain.model.auth.AccessCredentials
 import org.bxkr.octodiary.domain.model.diary.DiaryId
 import org.bxkr.octodiary.domain.repository.DiaryRepository
 import org.bxkr.octodiary.domain.repository.Logger
@@ -20,5 +22,8 @@ class MesMosRegRepositoryImpl(
     cacheLocalDataSource,
     logger
 ) {
+    override suspend fun getAccessToken(): MesToken? =
+        (sessionRepository.getCurrentSession()?.accessCredentials as? AccessCredentials.MesMosRegAccessCredentials)?.accessToken
+
     override val responsibleFor = DiaryId.MesMosReg
 }

@@ -7,28 +7,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalUriHandler
-import org.bxkr.octodiary.domain.model.auth.AuthState
 import org.bxkr.octodiary.presentation.viewmodel.AuthViewModel
-import org.bxkr.octodiary.presentation.viewmodel.MainViewModel
 import org.bxkr.octodiary.ui.component.ErrorDialog
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AuthScreen(
-    mainViewModel: MainViewModel = koinViewModel()
-) {
+fun AuthScreen() {
     val viewModel: AuthViewModel = koinViewModel()
-    val mainUiState by mainViewModel.uiState.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
     val uriHandler = LocalUriHandler.current
 
     val pagerState = rememberPagerState { 4 }
-
-    LaunchedEffect(mainUiState.authState) {
-        if (mainUiState.authState == AuthState.NotAuthorized) {
-            viewModel.resetUiState()
-        }
-    }
 
     LaunchedEffect(uiState.currentPage) {
         pagerState.animateScrollToPage(uiState.currentPage)

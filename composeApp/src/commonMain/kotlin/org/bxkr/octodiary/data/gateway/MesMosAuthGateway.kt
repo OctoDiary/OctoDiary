@@ -200,7 +200,8 @@ class MesMosAuthGateway(
             it?.copy(
                 accessCredentials = AccessCredentials.MesMosAccessCredentials(
                     mesToken, mosRuInfo, tokenExchange.refreshToken
-                )
+                ),
+                callbackAuthState = null
             )
         }
     }

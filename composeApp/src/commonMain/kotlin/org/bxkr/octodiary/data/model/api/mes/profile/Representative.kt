@@ -7,19 +7,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Representative(
     @SerialName("email")
-    val email: String,
+    val email: String?,
     @SerialName("first_name")
     val firstName: String,
     @SerialName("last_name")
     val lastName: String,
     @SerialName("middle_name")
-    val middleName: String,
+    val middleName: String?,
     @SerialName("person_id")
-    val personId: String,
+    val personId: String?,
     @SerialName("phone")
-    val phone: String,
+    val phone: String?,
     @SerialName("snils")
-    val snils: String,
+    val snils: String?,
     @SerialName("type")
     val type: String,
     @SerialName("type_id")

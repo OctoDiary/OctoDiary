@@ -11,14 +11,15 @@ import org.bxkr.octodiary.getPaths
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
+import org.koin.core.scope.Scope
 
 @Module(includes = [NetworkModule::class, CacheModule::class])
 @ComponentScan("org.bxkr.octodiary")
 class AppModule {
     @Single
     @MainStorage
-    fun storage() = storeOf<StorageLatest>(
-        file = Path("${getPaths().files}/main"),
+    fun storage(scope: Scope) = storeOf<StorageLatest>(
+        file = Path("${getPaths(scope).files}/main"),
         version = storageVersion,
         default = StorageLatest()
     )

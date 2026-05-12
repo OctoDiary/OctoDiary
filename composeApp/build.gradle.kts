@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
@@ -35,12 +35,8 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-        }
-
         androidMain.dependencies {
-            implementation(compose.preview)
+            implementation(libs.compose.components.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
 
             implementation(libs.ktor.client.okhttp)
@@ -53,13 +49,12 @@ kotlin {
         }
         commonMain.dependencies {
             // CMP
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(compose.materialIconsExtended)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.components.uiToolingPreview)
+            implementation(libs.compose.materialIconsExtended)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.graphics.core)
@@ -102,11 +97,6 @@ kotlin {
     }
 }
 
-ksp {
-    arg("KOIN_CONFIG_CHECK","true")
-    arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
-}
-
 android {
     namespace = "org.bxkr.octodiary"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -125,7 +115,15 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+        }
+
+        create("internalRelease") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".internal"
+            versionNameSuffix = "-internal"
+            matchingFallbacks += listOf("release")
         }
     }
     compileOptions {
@@ -135,12 +133,5 @@ android {
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
-    add("kspCommonMainMetadata", libs.koin.ksp)
-}
-
-tasks.withType(KotlinCompilationTask::class.java).configureEach {
-    if(name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
+    debugImplementation(libs.compose.uiTooling)
 }
